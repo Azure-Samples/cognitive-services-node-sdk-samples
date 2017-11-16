@@ -11,25 +11,40 @@ This project framework provides examples for the following services:
 * Using the **Bing Entity Serach SDK** \[[individual package](http://linktopackage)\]\[[complete package](http://linktopackage)\] for the [Entity Search API](https://azure.microsoft.com/en-us/services/cognitive-services/bing-entity-search-api/)
 * Using the **Bing Web Search SDK** \[[individual package](http://linktopackage)\]\[[complete package](http://linktopackage)\] for the [Web Search API](https://azure.microsoft.com/en-us/services/cognitive-services/bing-web-search-api/)
 
-## Getting Started
+## Run this sample
 
-### Prerequisites
 
-- A cognitive services API key with which to authenticate the SDK's calls. [Sign up here](https://azure.microsoft.com/en-us/services/cognitive-services/directory/) by navigating to the **Search** services and acquiring an API key. You can get a trial key for **free** which will expire after 30 days.
-- .NET core SDK (ability to run .netcore 1.1 apps)
+1. If you don't already have it, [get node.js](https://nodejs.org).
 
-### Installation
+1. Clone the repository.
 
-- npm install [package doesnt exist yet](http://linktopackage)
+    ```
+    git clone https://github.com/Azure-Samples/bing-search-node.git
+    ```
 
-### Quickstart
+1. Install the dependencies.
 
-To get these samples running locally, simply get the pre-requisites above, then:
+    ```
+    cd bing-search-node
+    npm install
+    ```
 
-1. git clone https://github.com/Azure-Samples/bing-search-dotnet.git
-2. cd bing-search-dotnet
-3. dotnet restore
-4. dotnet run
-5. navigate through the console app to play with the examples
+1. Get a cognitive services API key with which to authenticate the SDK's calls. [Sign up here](https://azure.microsoft.com/en-us/services/cognitive-services/directory/) by navigating to the **Search** services and acquiring an API key. You can get a trial key for **free** which will expire after 30 days.
+
+1. Set the following environment variables using the information from the service principle that you created.
+
+    ```
+    export AZURE_SEARCH_KEY={your service key}
+    ```
+
+    > [AZURE.NOTE] On Windows, use `set` instead of `export`.
+
+1. Run the sample.
+
+    ```
+    node index.js
+    ```
+
+1. Navigate through the console app to play with the examples.
 
 To see the code of each example, simply look at the examples in the Samples folder. They are written to be isolated in scope so that you can see only what you're interested in.
