@@ -32,7 +32,7 @@ function sample(){
       console.log("1. This will look up a single query (Xbox) and print out name and url for first web, image, news and videos results.");
       let result;
       try {
-        result = await webSearchApiClient.web.searchWithHttpOperationResponse("Xbox");
+        result = await webSearchApiClient.web.search("Xbox");
       } catch (err) {
         if (err instanceof webModels.ErrorResponse) {
           console.log("Encountered exception. " + err.message);
@@ -214,5 +214,5 @@ function sample(){
     }
   ]);
 }
-sample();
+
 exports.sample = sample;

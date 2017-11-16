@@ -28,82 +28,82 @@ let entityModels = entitySearchApiClient.models;
 
 function sample(){
   async.series([
-    // async function () {
-    //   console.log("1. This will look up a single entity (tom cruise) and print out a short description about them.");
-    //   let result;
-    //   try {
-    //     result = await entitySearchApiClient.entitiesOperations.search("tom cruise");
-    //   } catch (err) {
-    //     if (err instanceof entityModels.ErrorResponse) {
-    //       console.log("Encountered exception. " + err.message);
-    //     }
-    //   }
-    //   if (result.entities.value.length > 0) {
-    //     // find the entity that represents the dominant one
-    //     let mainEntity = result.entities.value.find(
-    //       (thing) => thing.entityPresentationInfo.entityScenario == "DominantEntity"
-    //     );
-    //     if (mainEntity) {
-    //       console.log("Searched for \"Tom Cruise\" and found a dominant entity with this description:");
-    //       console.log(mainEntity.description);
-    //     }
-    //     else {
-    //       console.log("Couldn't find main entity tom cruise!");
-    //     }
-    //   }
-    //   else {
-    //     console.log("Didn't see any data..");
-    //   }
-    // },
-    // async function () {
-    //   console.log(os.EOL);
-    //   console.log("2. This will handle disambiguation results for an ambiguous query (harry potter).");
-    //   let result;
-    //   try {
-    //     result = await entitySearchApiClient.entitiesOperations.search("harry potter");
-    //   } catch (err) {
-    //     if (err instanceof entityModels.ErrorResponse) {
-    //       console.log("Encountered exception. " + err.message);
-    //     }
-    //   }
-    //   if (result.entities.value.length > 0) {
-    //     // find the entity that represents the dominant one
-    //     let mainEntity = result.entities.value.find(
-    //       (thing) => thing.entityPresentationInfo.entityScenario == "DominantEntity"
-    //     );
-    //     let disambigEntities = result.entities.value.filter(
-    //       (thing) => thing.entityPresentationInfo.entityScenario == "DisambiguationItem"
-    //     )
+    async function () {
+      console.log("1. This will look up a single entity (tom cruise) and print out a short description about them.");
+      let result;
+      try {
+        result = await entitySearchApiClient.entitiesOperations.search("tom cruise");
+      } catch (err) {
+        if (err instanceof entityModels.ErrorResponse) {
+          console.log("Encountered exception. " + err.message);
+        }
+      }
+      if (result.entities.value.length > 0) {
+        // find the entity that represents the dominant one
+        let mainEntity = result.entities.value.find(
+          (thing) => thing.entityPresentationInfo.entityScenario == "DominantEntity"
+        );
+        if (mainEntity) {
+          console.log("Searched for \"Tom Cruise\" and found a dominant entity with this description:");
+          console.log(mainEntity.description);
+        }
+        else {
+          console.log("Couldn't find main entity tom cruise!");
+        }
+      }
+      else {
+        console.log("Didn't see any data..");
+      }
+    },
+    async function () {
+      console.log(os.EOL);
+      console.log("2. This will handle disambiguation results for an ambiguous query (harry potter).");
+      let result;
+      try {
+        result = await entitySearchApiClient.entitiesOperations.search("harry potter");
+      } catch (err) {
+        if (err instanceof entityModels.ErrorResponse) {
+          console.log("Encountered exception. " + err.message);
+        }
+      }
+      if (result.entities.value.length > 0) {
+        // find the entity that represents the dominant one
+        let mainEntity = result.entities.value.find(
+          (thing) => thing.entityPresentationInfo.entityScenario == "DominantEntity"
+        );
+        let disambigEntities = result.entities.value.filter(
+          (thing) => thing.entityPresentationInfo.entityScenario == "DisambiguationItem"
+        )
 
-    //     if (mainEntity) {
-    //       console.log(util.format("Searched for \"harry potter\" and found a dominant entity with type hint \"%s\" " +
-    //         "with this description:", mainEntity.entityPresentationInfo.entityTypeHints));
-    //       console.log(mainEntity.description);
-    //     }
-    //     else {
-    //       console.log("Couldn't find a reliable dominant entity for harry potter!");
-    //     }
+        if (mainEntity) {
+          console.log(util.format("Searched for \"harry potter\" and found a dominant entity with type hint \"%s\" " +
+            "with this description:", mainEntity.entityPresentationInfo.entityTypeHints));
+          console.log(mainEntity.description);
+        }
+        else {
+          console.log("Couldn't find a reliable dominant entity for harry potter!");
+        }
 
-    //     if (disambigEntities.length > 0) {
-    //       console.log(os.EOL);
-    //       console.log("This query is pretty ambiguous and can be referring to multiple things. " +
-    //         "Did you mean one of these: ")
-    //       let stringBuilder = disambigEntities[0].name + " the " +
-    //         disambigEntities[0].entityPresentationInfo.entityTypeDisplayHint;
-    //       for (let i = 1; i < disambigEntities.length; i++) {
-    //         stringBuilder += ", or " + disambigEntities[i].name + " the " +
-    //           disambigEntities[i].entityPresentationInfo.entityTypeDisplayHint;
-    //       }
-    //       console.log(stringBuilder + "?");
-    //     }
-    //     else {
-    //       console.log("We didn't find any disambiguation items for harry potter, so we must be certain what you're talking about!");
-    //     }
-    //   }
-    //   else {
-    //     console.log("Didn't see any data..");
-    //   }
-    // },
+        if (disambigEntities.length > 0) {
+          console.log(os.EOL);
+          console.log("This query is pretty ambiguous and can be referring to multiple things. " +
+            "Did you mean one of these: ")
+          let stringBuilder = disambigEntities[0].name + " the " +
+            disambigEntities[0].entityPresentationInfo.entityTypeDisplayHint;
+          for (let i = 1; i < disambigEntities.length; i++) {
+            stringBuilder += ", or " + disambigEntities[i].name + " the " +
+              disambigEntities[i].entityPresentationInfo.entityTypeDisplayHint;
+          }
+          console.log(stringBuilder + "?");
+        }
+        else {
+          console.log("We didn't find any disambiguation items for harry potter, so we must be certain what you're talking about!");
+        }
+      }
+      else {
+        console.log("Didn't see any data..");
+      }
+    },
     async function () {
       console.log(os.EOL);
       console.log("3. This will look up a single restaurant (john howie bellevue) and print out its phone number.");
@@ -198,7 +198,5 @@ function sample(){
     }
   ]);
 }
-
-sample();
 
 exports.sample = sample;
