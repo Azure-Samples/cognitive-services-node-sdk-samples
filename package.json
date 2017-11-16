@@ -1,0 +1,33 @@
+{
+  "name": "bing-search-node-sample",
+  "author": "Microsoft Corporation",
+  "contributors": [
+    "Xu, Willie <wilx@microsoft.com>"
+  ],
+  "version": "0.1.0",
+  "description": "A sample to demonstrate using the bing search api using the azure-cognitiveservices-search package in node.js",
+  "tags": [
+    "azure",
+    "microsoft",
+    "sdk"
+  ],
+  "keywords": [
+    "node",
+    "microsoft",
+    "azure"
+  ],
+  "main": "./index.js",
+  "license": "MIT",
+  "dependencies": {
+    "azure-cognitiveservices-search": "../azure-sdk-for-node/lib/services/cognitiveServicesSearch",
+    "ms-rest-azure": "^2.4.4"
+  },
+  "homepage": "https://github.com/Azure-Samples/bing-search-node",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Azure-Samples/bing-search-node"
+  },
+  "bugs": {
+    "url": "https://github.com/azure/azures-sdk-for-node/issues"
+  }
+}

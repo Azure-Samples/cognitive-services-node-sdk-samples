@@ -1,57 +1,50 @@
-# Project Name
+# Bing Search SDK Samples
 
-(short, 1-3 sentenced, description of the project)
+These samples will show you how to get up and running using the SDKs for various Bing Search services. They'll cover a few rudimentary use cases and hopefully express best practices for interacting with the data from these APIs.
 
 ## Features
 
-This project framework provides the following features:
+Please note that this samples package references an all-in-one SDK which includes all Bing Search services. Individual packages exist for each service if you would prefer working with smaller assembly sizes. Both individual service packages as well as the all-in-one will have feature parity for a particular service.
 
-* Feature 1
-* Feature 2
-* ...
+This project framework provides examples for the following services:
 
-## Getting Started
+* Using the **Bing Entity Serach SDK** \[[individual package](http://linktopackage)\]\[[complete package](http://linktopackage)\] for the [Entity Search API](https://azure.microsoft.com/en-us/services/cognitive-services/bing-entity-search-api/)
+* Using the **Bing Web Search SDK** \[[individual package](http://linktopackage)\]\[[complete package](http://linktopackage)\] for the [Web Search API](https://azure.microsoft.com/en-us/services/cognitive-services/bing-web-search-api/)
 
-### Prerequisites
-
-(ideally very short, if any)
-
-- OS
-- Library version
-- ...
-
-### Installation
-
-(ideally very short)
-
-- npm install [package name]
-- mvn install
-- ...
-
-### Quickstart
-(Add steps to get up and running quickly)
-
-1. git clone [repository clone url]
-2. cd [respository name]
-3. ...
+## Run this sample
 
 
-## Demo
+1. If you don't already have it, [get node.js](https://nodejs.org).
 
-A demo app is included to show how to use the project.
+1. Clone the repository.
 
-To run the demo, follow these steps:
+    ```
+    git clone https://github.com/Azure-Samples/bing-search-node.git
+    ```
 
-(Add steps to start up the demo)
+1. Install the dependencies.
 
-1.
-2.
-3.
+    ```
+    cd bing-search-node
+    npm install
+    ```
 
-## Resources
+1. Get a cognitive services API key with which to authenticate the SDK's calls. [Sign up here](https://azure.microsoft.com/en-us/services/cognitive-services/directory/) by navigating to the **Search** services and acquiring an API key. You can get a trial key for **free** which will expire after 30 days.
 
-(Any additional resources or related projects)
+1. Set the following environment variables using the information from the service principle that you created.
 
-- Link to supporting information
-- Link to similar sample
-- ...
+    ```
+    export AZURE_SEARCH_KEY={your service key}
+    ```
+
+    > [AZURE.NOTE] On Windows, use `set` instead of `export`.
+
+1. Run the sample.
+
+    ```
+    node index.js
+    ```
+
+1. Navigate through the console app to play with the examples.
+
+To see the code of each example, simply look at the examples in the Samples folder. They are written to be isolated in scope so that you can see only what you're interested in.
