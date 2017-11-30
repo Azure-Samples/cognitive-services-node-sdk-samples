@@ -34,7 +34,8 @@ This project framework provides examples for the following services:
 1. Set the following environment variables using the information from the service principle that you created.
 
     ```
-    export AZURE_SEARCH_KEY={your service key}
+    export AZURE_ENTITY_SEARCH_KEY={your service key}
+    export AZURE_WEB_SEARCH_KEY={your service key}
     ```
 
     > [AZURE.NOTE] On Windows, use `set` instead of `export`.
