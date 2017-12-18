@@ -11,11 +11,13 @@ const async = require('async');
 const Search = require('azure-cognitiveservices-search');
 const CognitiveServicesCredentials = require('ms-rest-azure').CognitiveServicesCredentials;
 
-if (!process.env['AZURE_ENTITY_SEARCH_KEY']) {
-  throw new Error('please set/export the following environment variable: AZURE_ENTITY_SEARCH_KEY');
+let keyVar = 'AZURE_ENTITY_SEARCH_KEY';
+
+if (!process.env[keyVar]) {
+  throw new Error('please set/export the following environment variable: ' + keyVar);
 }
 
-let serviceKey = process.env['AZURE_ENTITY_SEARCH_KEY'];
+let serviceKey = process.env[keyVar];
 
 
 ///////////////////////////////////////////

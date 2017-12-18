@@ -20,7 +20,8 @@
   "license": "MIT",
   "dependencies": {
     "azure-cognitiveservices-search": "../azure-sdk-for-node/lib/services/cognitiveServicesSearch",
-    "ms-rest-azure": "^2.4.4"
+    "ms-rest": "^2.3.0",
+    "ms-rest-azure": "^2.4.5"
   },
   "homepage": "https://github.com/Azure-Samples/bing-search-node",
   "repository": {
