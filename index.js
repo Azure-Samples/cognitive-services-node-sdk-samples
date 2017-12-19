@@ -4,7 +4,6 @@
  * license information.
  */
 
-const util = require('util');
 const readline = require('readline');
 
 let rl = readline.createInterface({
