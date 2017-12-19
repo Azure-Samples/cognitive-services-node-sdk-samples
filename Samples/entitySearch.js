@@ -198,7 +198,9 @@ function sample(){
         resolve();
       })
     }
-  ]);
+  ], (err) => {
+    throw(err);
+  });
 }
 
 exports.sample = sample;
