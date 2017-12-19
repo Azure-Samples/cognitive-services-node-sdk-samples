@@ -18,7 +18,7 @@ let samples = {
     WebSearch: './Samples/webSearch',
     VideoSearch: './Samples/videoSearch',
     NewsSearch: './Samples/newsSearch',
-    ImageSearch: './Samples/imagesearch'
+    ImageSearch: './Samples/imageSearch'
 }
 const separator = "--------------------------------------------------";
 console.log("Hi! Which Search API would you like to sample? Pick one of the following: (CTRL+C to exit)");

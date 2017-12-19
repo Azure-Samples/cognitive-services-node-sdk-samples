@@ -41,6 +41,7 @@ This project framework provides examples for the following services:
     export AZURE_WEB_SEARCH_KEY={your service key}
     export AZURE_VIDEO_SEARCH_KEY={your service key}
     export AZURE_NEWS_SEARCH_KEY={your service key}
+    export AZURE_IMAGE_SEARCH_KEY={your service key}
     ```
 
     > [AZURE.NOTE] On Windows, use `set` instead of `export`.

@@ -5,7 +5,6 @@
  */
 'use strict';
 
-const util = require('util');
 const os = require("os");
 const async = require('async');
 const Search = require('azure-cognitiveservices-search');
