@@ -13,27 +13,64 @@ let rl = readline.createInterface({
 });
 
 console.log();
-let samples = {
+const samples = {
+  Search: {
     EntitySearch: './Samples/entitySearch',
     WebSearch: './Samples/webSearch',
     VideoSearch: './Samples/videoSearch',
     NewsSearch: './Samples/newsSearch',
-    ImageSearch: './Samples/imageSearch'
-}
-const separator = "--------------------------------------------------";
-console.log("Hi! Which Search API would you like to sample? Pick one of the following: (CTRL+C to exit)");
-console.log(separator);
-console.log(Object.keys(samples).join(', '));
-console.log(separator);
+    ImageSearch: './Samples/imageSearch',
+    CustomSearch: './Samples/customSearch'
+  },
+  // Vision: {
 
-rl.question('', function(answer) {
-  if (samples.hasOwnProperty(answer)) {
-    console.log(util.format("Ok, running sample: %s", answer));
-    const Sample = require(samples[answer]);
-    Sample.sample();
+  // },
+  // Knowledge: {
+
+  // },
+  // Speech: {
+
+  // },
+  Language: {
+    SpellCheck: './Samples/spellCheck'
   }
-  else {
-    console.log(util.format("Sorry, \"%s\" doesn't seem to be a valid sample.", answer))
-  }
-  rl.close();
-});
+}
+const separator = "------------------------------------------------------------------------------------";
+
+askCategory();
+
+function askCategory () {
+  console.log("Hi! Which class of Cognitive Services would you like to sample? Pick one of the following: (CTRL+C to exit)");
+  console.log(separator);
+  console.log(Object.keys(samples).join(', '));
+  console.log(separator);
+  rl.question('', function(answer) {
+    if (samples.hasOwnProperty(answer)) {
+      console.log(`You picked: ${answer}`);
+      askSample(answer);
+    }
+    else {
+      console.log(`Sorry, \"${answer}\" doesn't seem to be a valid category.`);
+      askCategory();
+    }
+  });
+}
+
+function askSample (category) {
+  console.log(`Hi! Which ${category} API would you like to sample? Pick one of the following: (CTRL+C to exit)`);
+  console.log(separator);
+  console.log(Object.keys(samples[category]).join(', '));
+  console.log(separator);
+  rl.question('', function(answer) {
+    if (samples[category].hasOwnProperty(answer)) {
+      console.log(`Ok, running samples for ${answer}`);
+      const Sample = require(samples[category][answer]);
+      Sample.sample();
+      rl.close();
+    }
+    else {
+      console.log(`Sorry, \"${answer}\" doesn't seem to be a valid sample.`);
+      askSample(category);
+    }
+  });
+}

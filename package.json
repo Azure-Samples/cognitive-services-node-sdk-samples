@@ -20,6 +20,7 @@
   "license": "MIT",
   "dependencies": {
     "azure-cognitiveservices-search": "../azure-sdk-for-node/lib/services/cognitiveServicesSearch",
+    "azure-cognitiveservices-language": "../azure-sdk-for-node/lib/services/cognitiveServicesLanguage",
     "ms-rest": "^2.3.0",
     "ms-rest-azure": "^2.4.5"
   },
