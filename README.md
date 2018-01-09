@@ -8,13 +8,13 @@ Please note that this samples package references an all-in-one SDK which include
 
 This project framework provides examples for the following services:
 
-* Using the **Bing Entity Search SDK** \[[individual package](http://linktopackage)\]\[[complete package](http://linktopackage)\] for the [Entity Search API](https://azure.microsoft.com/en-us/services/cognitive-services/bing-entity-search-api/)
-* Using the **Bing Web Search SDK** \[[individual package](http://linktopackage)\]\[[complete package](http://linktopackage)\] for the [Web Search API](https://azure.microsoft.com/en-us/services/cognitive-services/bing-web-search-api/)
-* Using the **Bing Video Search SDK** \[[individual package](http://linktopackage)\]\[[complete package](http://linktopackage)\] for the [Video Search API](https://azure.microsoft.com/en-us/services/cognitive-services/bing-video-search-api/)
-* Using the **Bing News Search SDK** \[[individual package](http://linktopackage)\]\[[complete package](http://linktopackage)\] for the [News Search API](https://azure.microsoft.com/en-us/services/cognitive-services/bing-news-search-api/)
-* Using the **Bing Image Search SDK** \[[individual package](http://linktopackage)\]\[[complete package](http://linktopackage)\] for the [Image Search API](https://azure.microsoft.com/en-us/services/cognitive-services/bing-image-search-api/)
-* Using the **Bing Custom Search SDK** \[[individual package](http://linktopackage)\]\[[complete package](http://linktopackage)\] for the [Custom Search API](https://azure.microsoft.com/en-us/services/cognitive-services/bing-custom-search/)
-* Using the **Bing Spell Check SDK** \[[individual package](http://linktopackage)\]\[[complete package](http://linktopackage)\] for the [Spell Check API](https://azure.microsoft.com/en-us/services/cognitive-services/spell-check/)
+* Using the **Bing Entity Search SDK** \[[individual package](https://www.npmjs.com/package/azure-cognitiveservices-entitysearch)\]\[[complete package](https://www.npmjs.com/package/azure-cognitiveservices-search)\] for the [Entity Search API](https://azure.microsoft.com/en-us/services/cognitive-services/bing-entity-search-api/)
+* Using the **Bing Web Search SDK** \[[individual package](https://www.npmjs.com/package/azure-cognitiveservices-websearch)\]\[[complete package](https://www.npmjs.com/package/azure-cognitiveservices-search)\] for the [Web Search API](https://azure.microsoft.com/en-us/services/cognitive-services/bing-web-search-api/)
+* Using the **Bing Video Search SDK** \[[individual package](https://www.npmjs.com/package/azure-cognitiveservices-videosearch)\]\[[complete package](https://www.npmjs.com/package/azure-cognitiveservices-search)\] for the [Video Search API](https://azure.microsoft.com/en-us/services/cognitive-services/bing-video-search-api/)
+* Using the **Bing News Search SDK** \[[individual package](https://www.npmjs.com/package/azure-cognitiveservices-newssearch)\]\[[complete package](https://www.npmjs.com/package/azure-cognitiveservices-search)\] for the [News Search API](https://azure.microsoft.com/en-us/services/cognitive-services/bing-news-search-api/)
+* Using the **Bing Image Search SDK** \[[individual package](https://www.npmjs.com/package/azure-cognitiveservices-imagesearch)\]\[[complete package](https://www.npmjs.com/package/azure-cognitiveservices-search)\] for the [Image Search API](https://azure.microsoft.com/en-us/services/cognitive-services/bing-image-search-api/)
+* Using the **Bing Custom Search SDK** \[[individual package](https://www.npmjs.com/package/azure-cognitiveservices-customsearch)\]\[[complete package](https://www.npmjs.com/package/azure-cognitiveservices-search)\] for the [Custom Search API](https://azure.microsoft.com/en-us/services/cognitive-services/bing-custom-search/)
+* Using the **Bing Spell Check SDK** \[[individual package](https://www.npmjs.com/package/azure-cognitiveservices-spellcheck)\]\[[complete package](https://www.npmjs.com/package/azure-cognitiveservices-language)\] for the [Spell Check API](https://azure.microsoft.com/en-us/services/cognitive-services/spell-check/)
 
 ## Run this sample
 
@@ -25,9 +25,6 @@ This project framework provides examples for the following services:
 
     ```
     git clone https://github.com/Azure-Samples/cognitive-services-node-sdk-samples.git
-
-    (the following will be removed once the cognitive-services sdks are published)
-    git clone -b cognitiveservices https://github.com/Azure/azure-sdk-for-node.git
     ```
 
 1. Install the dependencies.
