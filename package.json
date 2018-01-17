@@ -21,6 +21,7 @@
   "dependencies": {
     "azure-cognitiveservices-search": "^1.0.0-preview",
     "azure-cognitiveservices-language": "^1.0.0-preview",
+    "azure-cognitiveservices-vision": "^1.0.0-preview",
     "ms-rest": "^2.3.0",
     "ms-rest-azure": "^2.5.0"
   },

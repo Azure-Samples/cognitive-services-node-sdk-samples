@@ -21,9 +21,10 @@ const samples = {
     ImageSearch: './Samples/imageSearch',
     CustomSearch: './Samples/customSearch'
   },
-  // Vision: {
-
-  // },
+  Vision: {
+    ComputerVision: './Samples/computerVision',
+    ContentModerator: './Samples/contentModerator'
+  },
   // Knowledge: {
 
   // },
@@ -31,7 +32,8 @@ const samples = {
 
   // },
   Language: {
-    SpellCheck: './Samples/spellCheck'
+    SpellCheck: './Samples/spellCheck',
+    TextAnalytics: './Samples/textAnalytics'
   }
 }
 const separator = "------------------------------------------------------------------------------------";
