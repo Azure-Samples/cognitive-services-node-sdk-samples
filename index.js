@@ -66,8 +66,8 @@ function askSample (category) {
     if (samples[category].hasOwnProperty(answer)) {
       console.log(`Ok, running samples for ${answer}`);
       const Sample = require(samples[category][answer]);
-      Sample.sample();
-      rl.close();
+      Sample.sample(rl);
+      // rl.close();
     }
     else {
       console.log(`Sorry, \"${answer}\" doesn't seem to be a valid sample.`);
