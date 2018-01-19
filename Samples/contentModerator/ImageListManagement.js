@@ -26,7 +26,7 @@ const imgSports = {
 };
 
 // The initial set of images to add to the list with the swimsuit label.
-const imgSwimsuits = {
+const imgSwimsuit = {
   label: "Swimsuit",
   urls: [
     "https://moderatorsampleimages.blob.core.windows.net/samples/sample1.jpg",
@@ -55,57 +55,54 @@ let imageIdMap = {};
 let listDetails;
 
 async function sample(client) {
-  console.log("1. This willl create review information using the image.");
+  console.log("1. This will create review information using the image.");
   console.log(os.EOL);
 
-  // let creationResult = await createCustomList(client);
-  // if (creationResult.id) {
-  //   let listId = creationResult.id;
+  let creationResult = await createCustomList(client);
+
+
+  if (creationResult.id) {
+    let listId = creationResult.id;
     // Perform various operations using the image list.
-    // await addImages(client, listId, imgSports.urls, imgSports.label);
-    // await addImages(client, listId, imgSwimsuit.urls, imgSwimsuit.label);
+    await addImages(client, listId, imgSports.urls, imgSports.label);
+    await addImages(client, listId, imgSwimsuit.urls, imgSwimsuit.label);
 
-    // GetAllImageIds(client, listId);
-    // UpdateListDetails(client, listId);
-    // GetListDetails(client, listId);
+    await getAllImageIds(client, listId);
+    await updateListDetails(client, listId);
+    await getListDetails(client, listId);
 
-    // // Be sure to refresh search index
-    // RefreshSearchIndex(client, listId);
+    // Be sure to refresh search index
+    await refreshSearchIndex(client, listId);
 
-    // // WriteLine();
-    // WriteLine($"Waiting {latencyDelay} minutes to allow the server time to propagate the index changes.", true);
-    // Thread.Sleep((int)(latencyDelay * 60 * 1000));
+    // console.log();
+    console.log(`Waiting ${latencyDelay} minutes to allow the server time to propagate the index changes.`);
+    await setTimeoutPromise(parseInt(latencyDelay * 60 * 1000), null);
 
-    // // Match images against the image list.
-    // MatchImages(client, listId, ImagesToMatch);
+    // Match images against the image list.
+    await matchImages(client, listId, imagesToMatch);
 
-    // // Remove images
-    // RemoveImages(client, listId, Images.Corrections);
+    // Remove images
+    await removeImages(client, listId, imgCorrections);
 
-    // // Be sure to refresh search index
-    // RefreshSearchIndex(client, listId);
+    // Be sure to refresh search index
+    await refreshSearchIndex(client, listId);
 
-    // WriteLine();
-    // WriteLine($"Waiting {latencyDelay} minutes to allow the server time to propagate the index changes.", true);
-    // Thread.Sleep((int)(latencyDelay * 60 * 1000));
+    console.log(os.EOL);
+    console.log(`Waiting ${latencyDelay} minutes to allow the server time to propagate the index changes.`);
+    await setTimeoutPromise(parseInt(latencyDelay * 60 * 1000), null);
 
-    // // Match images again against the image list. The removed image should not get matched.
-    // MatchImages(client, listId, ImagesToMatch);
+    // Match images again against the image list. The removed image should not get matched.
+    await matchImages(client, listId, imagesToMatch);
 
-    // // Delete all images from the list.
-    // DeleteAllImages(client, listId);
+    // Delete all images from the list.
+    await deleteAllImages(client, listId);
 
-    // // Delete the image list.
-    // DeleteCustomList(client, listId);
+    // Delete the image list.
+    await deleteCustomList(client, listId);
 
-    // // Verify that the list was deleted.
-    // GetAllListIds(client);
-  // }
-  // await getReviewDetails(client);
-  // console.log("Perform manual reviews on the Content Moderator site.");
-  // console.log(`Waiting ${latencyDelay} seconds for results to propigate.`);
-  // await setTimeoutPromise(latencyDelay * 1000, null);
-  // await getReviewDetails(client);
+    // Verify that the list was deleted.
+    await getAllListIds(client);
+  }
 }
 
 async function createCustomList(client) {
@@ -118,11 +115,15 @@ async function createCustomList(client) {
     }
   };
   console.log(`Creating list ${listDetails.name}.`);
-  let result = await client.listManagementImageLists.create("application/json", listDetails);
-  await setTimeoutPromise(throttleRate, null);
-  console.log("Response:");
-  console.log(JSON.stringify(result, null, 2))
-  return result;
+  try {
+    let result = await client.listManagementImageLists.create("application/json", listDetails);
+    await setTimeoutPromise(throttleRate, null);
+    console.log("Response:");
+    console.log(JSON.stringify(result, null, 2))
+    return result;
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 async function addImages(client, listId, imagesToAdd, label) {
@@ -134,7 +135,7 @@ async function addImages(client, listId, imagesToAdd, label) {
       let result = await client.listManagementImage.addImageUrlInput(listId.toString(), "application/json", {
         dataRepresentation: 'URL',
         value: imageUrl
-      }, {label: label});
+      }, { label: label });
 
       imageIdMap[imageUrl] = parseInt(result.contentId);
       console.log("Response:");
@@ -145,6 +146,156 @@ async function addImages(client, listId, imagesToAdd, label) {
     } finally {
       await setTimeoutPromise(throttleRate, null);
     }
+  }
+}
+
+async function removeImages(client, listId, imagesToRemove) {
+  for (let i = 0; i < imagesToRemove.length; i++) {
+    let imageUrl = imagesToRemove[i];
+    if (!imageIdMap.hasOwnProperty(imageUrl)) {
+      continue;
+    }
+    let imageId = imageIdMap[imageUrl];
+    console.log(os.EOL);
+    console.log(`Removing entry for ${imageUrl} (ID = ${imageId}) from list ${listId}.`);
+
+    try {
+      let result = await client.listManagementImage.deleteImage(listId.toString(), imageId.toString());
+      await setTimeoutPromise(throttleRate, null);
+      delete imageIdMap[imageUrl];
+      console.log("Response:");
+      console.log(JSON.stringify(result, null, 2));
+      return result;
+    } catch (err) {
+      console.log(err);
+    }
+  }
+}
+
+async function getAllImageIds(client, listId) {
+  console.log(os.EOL);
+  console.log(`Getting all image IDs for list ${listId}.`);
+
+  try {
+    let result = await client.listManagementImage.getAllImageIds(listId.toString());
+    await setTimeoutPromise(throttleRate, null);
+    console.log("Response:");
+    console.log(JSON.stringify(result, null, 2));
+    return result;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+async function updateListDetails(client, listId) {
+  console.log(os.EOL);
+  console.log(`Updating details for list ${listId}.`);
+
+  listDetails.name = "Swimsuits and sports";
+
+  try {
+    let result = await client.listManagementImageLists.update(listId.toString(), "application/json", listDetails);
+    await setTimeoutPromise(throttleRate, null);
+    console.log("Response:");
+    console.log(JSON.stringify(result, null, 2));
+    return result;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+async function getListDetails(client, listId) {
+  console.log(os.EOL);
+  console.log(`Getting details for list ${listId}.`);
+
+  try {
+    let result = await client.listManagementImageLists.getDetails(listId.toString());
+    await setTimeoutPromise(throttleRate, null);
+    console.log("Response:");
+    console.log(JSON.stringify(result, null, 2));
+    return result;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+async function refreshSearchIndex(client, listId) {
+  console.log(os.EOL);
+  console.log(`Refreshing the search index for list ${listId}.`);
+
+  try {
+    let result = await client.listManagementImageLists.refreshIndexMethod(listId.toString());
+    await setTimeoutPromise(throttleRate, null);
+    console.log("Response:");
+    console.log(JSON.stringify(result, null, 2));
+    return result;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+async function matchImages(client, listId, imagesToMatch) {
+  for (let i = 0; i < imagesToMatch.length; i++) {
+    let imageUrl = imagesToMatch[i];
+    console.log(os.EOL);
+    console.log(`Matching image ${imageUrl} against list ${listId}.`);
+
+    try {
+      let result = await client.imageModeration.matchUrlInput("application/json", {
+        dataRepresentation: 'URL',
+        value: imageUrl
+      }, listId.toString());
+      await setTimeoutPromise(throttleRate, null);
+      console.log("Response:");
+      console.log(JSON.stringify(result, null, 2));
+    } catch (err) {
+      console.log(err);
+    }
+  }
+}
+
+async function deleteAllImages(client, listId) {
+  console.log(os.EOL);
+  console.log(`Deleting all images from list ${listId}.`);
+
+  try {
+    let result = await client.listManagementImage.deleteAllImages(listId.toString());
+    await setTimeoutPromise(throttleRate, null);
+    console.log("Response:");
+    console.log(JSON.stringify(result, null, 2));
+    return result;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+async function deleteCustomList(client, listId) {
+  console.log(os.EOL);
+  console.log(`Deleting list ${listId}.`);
+
+  try {
+    let result = await client.listManagementImageLists.deleteMethod(listId.toString());
+    await setTimeoutPromise(throttleRate, null);
+    console.log("Response:");
+    console.log(JSON.stringify(result, null, 2));
+    return result;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+async function getAllListIds(client) {
+  console.log(os.EOL);
+  console.log("Getting all image list IDs.");
+
+  try {
+    let result = await client.listManagementImageLists.getAllImageLists();
+    await setTimeoutPromise(throttleRate, null);
+    console.log("Response:");
+    console.log(JSON.stringify(result, null, 2));
+    return result;
+  } catch (err) {
+    console.log(err);
   }
 }
 
