@@ -20,9 +20,6 @@ const imageUrls = [
 ];
 
 function sample(client) {
-  console.log("1. This will analyze multiple images for various content.");
-  console.log(os.EOL);
-
   let bodyModel;
   let result;
   let functions = [detectRacy, detectText, detectFace];
@@ -35,7 +32,7 @@ function sample(client) {
         dataRepresentation: 'URL',
         value: imageUrls[imgIndex]
       }
-      console.log(`Analyzing: ${bodyModel.value}`);
+      console.log(`${imgIndex + 1}. Analyzing: ${bodyModel.value} for various content`);
     }
     functions[funcIndex]().then((result) => {
       console.log("waiting 1 second before next request..");
@@ -48,6 +45,7 @@ function sample(client) {
         newImgIndex++;
       }
       if (newImgIndex < imageUrls.length) {
+        console.log(os.EOL);
         analyzeImage(newImgIndex, newFuncIndex);
       }
     }).catch((err) => {

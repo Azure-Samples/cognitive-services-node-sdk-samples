@@ -55,15 +55,14 @@ let imageIdMap = {};
 let listDetails;
 
 async function sample(client) {
-  console.log("1. This will create review information using the image.");
-  console.log(os.EOL);
+  console.log("1. This will create a custom image list.");
 
   let creationResult = await createCustomList(client);
 
-
   if (creationResult.id) {
     let listId = creationResult.id;
-    // Perform various operations using the image list.
+    console.log(os.EOL);
+    console.log("2. This will perform various operations using the image list.");
     await addImages(client, listId, imgSports.urls, imgSports.label);
     await addImages(client, listId, imgSwimsuit.urls, imgSwimsuit.label);
 
@@ -71,35 +70,34 @@ async function sample(client) {
     await updateListDetails(client, listId);
     await getListDetails(client, listId);
 
-    // Be sure to refresh search index
+    console.log(os.EOL);
+    console.log("3. Be sure to refresh search index.");
     await refreshSearchIndex(client, listId);
 
-    // console.log();
     console.log(`Waiting ${latencyDelay} minutes to allow the server time to propagate the index changes.`);
     await setTimeoutPromise(parseInt(latencyDelay * 60 * 1000), null);
 
-    // Match images against the image list.
+    console.log(os.EOL);
+    console.log("4. This will match images against the image list.");
     await matchImages(client, listId, imagesToMatch);
 
-    // Remove images
+    console.log(os.EOL);
+    console.log("5. This will remove the images and refresh the search index again.");
     await removeImages(client, listId, imgCorrections);
-
-    // Be sure to refresh search index
     await refreshSearchIndex(client, listId);
 
     console.log(os.EOL);
     console.log(`Waiting ${latencyDelay} minutes to allow the server time to propagate the index changes.`);
     await setTimeoutPromise(parseInt(latencyDelay * 60 * 1000), null);
 
-    // Match images again against the image list. The removed image should not get matched.
+    console.log(os.EOL);
+    console.log("6. Match images again against the image list. The removed image should not get matched.");
     await matchImages(client, listId, imagesToMatch);
 
-    // Delete all images from the list.
+    console.log(os.EOL);
+    console.log("7. Delete and verify.");
     await deleteAllImages(client, listId);
-
-    // Delete the image list.
     await deleteCustomList(client, listId);
-
     // Verify that the list was deleted.
     await getAllListIds(client);
   }

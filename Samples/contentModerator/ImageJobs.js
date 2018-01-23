@@ -38,7 +38,7 @@ async function sample(client) {
     await setTimeoutPromise(throttleRate, null);
     console.log(os.EOL);
 
-    console.log("Get job status before review.");
+    console.log("2. Get job status before review.");
     let jobDetails = await client.reviews.getJobDetailsWithHttpOperationResponse(teamName, jobId);
 
     // Log just the response body from the returned task.
@@ -51,7 +51,7 @@ async function sample(client) {
     console.log(`Waiting ${latencyDelay} seconds for results to propagate.`);
     await setTimeoutPromise(latencyDelay * 1000, null);
 
-    console.log("Get job status after review.");
+    console.log("3. Get job status after review.");
     jobDetails = await client.reviews.getJobDetailsWithHttpOperationResponse(teamName, jobId);
 
     // Log just the response body from the returned task.

@@ -27,14 +27,18 @@ const latencyDelay = 45;
 let reviewItems = [];
 
 async function sample(client) {
-  console.log("1. This will create review information using the image.");
-  console.log(os.EOL);
-
+  console.log("1. This will create review information for the image.");
   await createReviews(client);
+
+  console.log(os.EOL);
+  console.log("2. This will get review information using the reviewId from the last call.");
   await getReviewDetails(client);
   console.log("Perform manual reviews on the Content Moderator site.");
   console.log(`Waiting ${latencyDelay} seconds for results to propigate.`);
   await setTimeoutPromise(latencyDelay * 1000, null);
+
+  console.log(os.EOL);
+  console.log("3. Get review information again after wait.");
   await getReviewDetails(client);
 }
 

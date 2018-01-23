@@ -22,8 +22,8 @@ let serviceKey = process.env[keyVar];
 const samples = {
   ImageModeration: './contentModerator/ImageModeration',
   ImageListManagement: './contentModerator/ImageListManagement',
-  ImageReviewJobs: './contentModerator/ImageReviewJobs',
-  CreateReviews: './contentModerator/CreateReviews',
+  ImageJobs: './contentModerator/ImageJobs',
+  ImageReviews: './contentModerator/ImageReviews',
   TextModeration: './contentModerator/TextModeration'
 }
 
@@ -36,6 +36,7 @@ let contentModeratorApiClient = new Vision.ContentModeratorAPIClient(credentials
 const separator = "------------------------------------------------------------------------------------";
 
 function sample(rl) {
+  rl["keepOpen"] = true;
   askSample();
 
   function askSample() {
@@ -43,7 +44,7 @@ function sample(rl) {
     console.log(separator);
     console.log(Object.keys(samples).join(', '));
     console.log(separator);
-    rl.question('', function(answer) {
+    rl.question('', function (answer) {
       if (samples.hasOwnProperty(answer)) {
         console.log(`Ok, running ${answer} sample`);
         const Sample = require(samples[answer]);
