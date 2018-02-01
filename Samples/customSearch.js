@@ -26,40 +26,43 @@ let serviceKey = process.env[keyVar];
 let credentials = new CognitiveServicesCredentials(serviceKey);
 let customSearchApiClient = new Search.CustomSearchAPIClient(credentials);
 
-function sample() {
-  async.series([
-    async function () {
-      console.log("1. This will look up a single query (Xbox) and print out name and url for first web result");
+function sample(rl) {
+  rl["keepOpen"] = true;
 
-      let webData = await customSearchApiClient.customInstance.search("Xbox", { customConfig: 100 });
-      console.log("Searched for Query# \" Xbox \"");
-
-      //WebPages
-      if (webData.webPages.value.length > 0) {
-        // find the first web page
-        let firstWebPagesResult = webData.webPages.value[0];
-
-        if (firstWebPagesResult) {
-          console.log(`Webpage Results#${webData.webPages.value.length}`);
-          console.log(`First web page name: ${firstWebPagesResult.name} `);
-          console.log(`First web page URL: ${firstWebPagesResult.url} `);
-        } else {
-          console.log("Couldn't find web results!");
-        }
-      } else {
-        console.log("Didn't see any Web data..");
-      }
-    },
-    function () {
-      return new Promise((resolve) => {
-        console.log(os.EOL);
-        console.log("Finished running Custom-Search sample.");
-        resolve();
-      })
+  console.log("Please provide a customConfig number for your Custom Search.")
+  rl.question('', async function (answer) {
+    try {
+      await runSearch(parseInt(answer));
+    } catch (err) {
+      console.log(err);
     }
-  ], (err) => {
-    throw (err);
+    rl.close();
+    console.log(os.EOL);
+    console.log("Finished running Custom-Search sample.");
   });
+
+  async function runSearch(customConfig) {
+    console.log("1. This will look up a single query (Xbox) and print out name and url for first web result");
+
+    let webData = await customSearchApiClient.customInstance.search("Xbox", { customConfig: customConfig });
+    console.log("Searched for Query# \" Xbox \"");
+
+    //WebPages
+    if (((webData.webPages || {}).value || {}).length > 0) {
+      // find the first web page
+      let firstWebPagesResult = webData.webPages.value[0];
+
+      if (firstWebPagesResult) {
+        console.log(`Webpage Results#${webData.webPages.value.length}`);
+        console.log(`First web page name: ${firstWebPagesResult.name} `);
+        console.log(`First web page URL: ${firstWebPagesResult.url} `);
+      } else {
+        console.log("Couldn't find web results!");
+      }
+    } else {
+      console.log("Didn't see any Web data..");
+    }
+  }
 }
 
 exports.sample = sample;

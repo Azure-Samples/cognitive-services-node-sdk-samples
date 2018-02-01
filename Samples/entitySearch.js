@@ -28,7 +28,7 @@ let credentials = new CognitiveServicesCredentials(serviceKey);
 let entitySearchApiClient = new Search.EntitySearchAPIClient(credentials);
 let entityModels = entitySearchApiClient.models;
 
-function sample(){
+function sample() {
   async.series([
     async function () {
       console.log("1. This will look up a single entity (tom cruise) and print out a short description about them.");
@@ -40,7 +40,7 @@ function sample(){
           console.log("Encountered exception. " + err.message);
         }
       }
-      if (result.entities.value.length > 0) {
+      if (((result.entities || {}).value || {}).length > 0) {
         // find the entity that represents the dominant one
         let mainEntity = result.entities.value.find(
           (thing) => thing.entityPresentationInfo.entityScenario == "DominantEntity"
@@ -68,7 +68,7 @@ function sample(){
           console.log("Encountered exception. " + err.message);
         }
       }
-      if (result.entities.value.length > 0) {
+      if (((result.entities || {}).value || {}).length > 0) {
         // find the entity that represents the dominant one
         let mainEntity = result.entities.value.find(
           (thing) => thing.entityPresentationInfo.entityScenario == "DominantEntity"
@@ -118,7 +118,7 @@ function sample(){
         }
       }
       let result = JSON.parse(httpResponse.response.body);
-      if (result.places.value.length > 0) {
+      if (((result.places || {}).value || {}).length > 0) {
         let restaurant = result.places.value[0];
         if (restaurant) {
           console.log("Searched for \"John Howie Bellevue\" and found a restaurant with this phone number:");
@@ -144,7 +144,7 @@ function sample(){
         }
       }
       let result = JSON.parse(httpResponse.response.body);
-      if (result.places.value.length > 0) {
+      if (((result.places || {}).value || {}).length > 0) {
         // get all the list items that relate to this query
         let listItems = result.places.value.filter(
           (thing) => thing.entityPresentationInfo.entityScenario == "ListItem"
@@ -199,7 +199,7 @@ function sample(){
       })
     }
   ], (err) => {
-    throw(err);
+    throw (err);
   });
 }
 

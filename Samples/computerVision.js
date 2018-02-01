@@ -40,7 +40,7 @@ function sample() {
       });
 
       // Description Results
-      if (result.description.captions.length > 0){
+      if (((result.description || {}).captions || {}).length > 0){
         console.log(`The image can be described as: ${result.description.captions[0].text}`);
         console.log(`Confidence of description: ${result.description.captions[0].confidence}`);
       } else {

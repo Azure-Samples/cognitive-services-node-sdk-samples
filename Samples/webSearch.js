@@ -27,7 +27,7 @@ let credentials = new CognitiveServicesCredentials(serviceKey);
 let webSearchApiClient = new Search.WebSearchAPIClient(credentials);
 let webModels = webSearchApiClient.models;
 
-function sample(){
+function sample() {
   async.series([
     async function () {
       console.log("1. This will look up a single query (Xbox) and print out name and url for first web, image, news and videos results.");
@@ -37,76 +37,110 @@ function sample(){
       } catch (err) {
         if (err instanceof webModels.ErrorResponse) {
           console.log("Encountered exception. " + err.message);
+        } else {
+          throw err;
         }
       }
       console.log("Searched for Query: \" Xbox \"");
 
       // WebPages
-      if (result.webPages.value.length > 0) {
-        // find the first web page
-        let firstWebPagesResult = result.webPages.value[0];
-        if (firstWebPagesResult) {
+      try {
+        if (result.webPages.value.length > 0) {
+          // find the first web page
+          let firstWebPagesResult = result.webPages.value[0];
+          if (firstWebPagesResult) {
             console.log("Webpage Results: " + result.webPages.value.length);
             console.log("First web page name: " + firstWebPagesResult.name);
             console.log("First web page URL: " + firstWebPagesResult.url);
+          }
+          else {
+            console.log("Couldn't find web results!");
+          }
         }
         else {
-          console.log("Couldn't find web results!");
+          throw new TypeError();
         }
-      }
-      else {
-        console.log("Didn't see any Web data..");
+      } catch (err) {
+        if (err instanceof TypeError) {
+          console.log("Didn't see any Web data..");
+        } else {
+          throw err;
+        }
       }
 
       // Images
-      if (result.images.value.length > 0) {
-        // find the first image result
-        let firstImageResult = result.images.value[0];
-        if (firstImageResult) {
+      try {
+        if (result.images.value.length > 0) {
+          // find the first image result
+          let firstImageResult = result.images.value[0];
+          if (firstImageResult) {
             console.log("Image Results: " + result.images.value.length);
             console.log("First Image result name: " + firstImageResult.name);
             console.log("First Image result URL: " + firstImageResult.contentUrl);
+          }
+          else {
+            console.log("Couldn't find image results!");
+          }
         }
         else {
-          console.log("Couldn't find image results!");
+          throw TypeError();
         }
-      }
-      else {
-        console.log("Didn't see any Image data..");
+      } catch (err) {
+        if (err instanceof TypeError) {
+          console.log("Didn't see any Image data..");
+        } else {
+          throw err;
+        }
       }
 
       // News
-      if (result.news.value.length > 0) {
-        // find the first news result
-        let firstNewsResult = result.news.value[0];
-        if (firstNewsResult) {
+      try {
+        if (result.news.value.length > 0) {
+          // find the first news result
+          let firstNewsResult = result.news.value[0];
+          if (firstNewsResult) {
             console.log("News Results: " + result.news.value.length);
             console.log("First news result name: " + firstNewsResult.name);
             console.log("First news result URL: " + firstNewsResult.url);
+          }
+          else {
+            console.log("Couldn't find news results!");
+          }
         }
         else {
-          console.log("Couldn't find news results!");
+          throw new TypeError();
+        }
+      } catch (err) {
+        if (err instanceof TypeError) {
+          console.log("Didn't see any News data..");
+        } else {
+          throw err;
         }
       }
-      else {
-        console.log("Didn't see any News data..");
-      }
-      
+
       // Videos
-      if (result.videos.value.length > 0) {
-        // find the first video result
-        let firstVideoResult = result.videos.value[0];
-        if (firstVideoResult) {
+      try {
+        if (result.videos.value.length > 0) {
+          // find the first video result
+          let firstVideoResult = result.videos.value[0];
+          if (firstVideoResult) {
             console.log("Video Results: " + result.videos.value.length);
             console.log("First video result name: " + firstVideoResult.name);
             console.log("First video result URL: " + firstVideoResult.contentUrl);
+          }
+          else {
+            console.log("Couldn't find video results!");
+          }
         }
         else {
-          console.log("Couldn't find video results!");
+          throw new TypeError();
         }
-      }
-      else {
-        console.log("Didn't see any video data..");
+      } catch (err) {
+        if (err instanceof TypeError) {
+          console.log("Didn't see any Video data..");
+        } else {
+          throw err;
+        }
       }
     },
     async function () {
@@ -121,24 +155,34 @@ function sample(){
       } catch (err) {
         if (err instanceof webModels.ErrorResponse) {
           console.log("Encountered exception. " + err.message);
+        } else {
+          throw err;
         }
       }
       console.log("Searched for Query# \" Best restaurants in Seattle \"");
 
-      if (result.webPages.value.length > 0){
-        // find the first web page
-        let firstWebPagesResult = result.webPages.value[0];
-        if (firstWebPagesResult){
-          console.log("Web Results: " + result.webPages.value.length);
-          console.log("First web page name: " + firstWebPagesResult.name);
-          console.log("First web page URL: " + firstWebPagesResult.url);
+      try {
+        if (result.webPages.value.length > 0) {
+          // find the first web page
+          let firstWebPagesResult = result.webPages.value[0];
+          if (firstWebPagesResult) {
+            console.log("Web Results: " + result.webPages.value.length);
+            console.log("First web page name: " + firstWebPagesResult.name);
+            console.log("First web page URL: " + firstWebPagesResult.url);
+          }
+          else {
+            console.log("Couldn't find any web result!");
+          }
         }
         else {
-          console.log("Couldn't find any web result!");
+          throw new TypeError();
         }
-      }
-      else {
-        console.log("Didn't see any Web data..");
+      } catch (err) {
+        if (err instanceof TypeError) {
+          console.log("Didn't see any Web data..");
+        } else {
+          throw err;
+        }
       }
     },
     async function () {
@@ -152,24 +196,34 @@ function sample(){
       } catch (err) {
         if (err instanceof webModels.ErrorResponse) {
           console.log("Encountered exception. " + err.message);
+        } else {
+          throw err;
         }
       }
       console.log("Searched for Query# \" Microsoft \" with response filters \"news\"");
 
-      if (result.news.value.length > 0){
-        // find the first web page
-        let firstNewsResult = result.news.value[0];
-        if (firstNewsResult){
-          console.log("News Results: " + result.news.value.length);
-          console.log("First news page name: " + firstNewsResult.name);
-          console.log("First news page URL: " + firstNewsResult.url);
+      try {
+        if (result.news.value.length > 0) {
+          // find the first web page
+          let firstNewsResult = result.news.value[0];
+          if (firstNewsResult) {
+            console.log("News Results: " + result.news.value.length);
+            console.log("First news page name: " + firstNewsResult.name);
+            console.log("First news page URL: " + firstNewsResult.url);
+          }
+          else {
+            console.log("Couldn't find any news result!");
+          }
         }
         else {
-          console.log("Couldn't find any news result!");
+          throw new TypeError();
         }
-      }
-      else {
-        console.log("Didn't see any news data..");
+      } catch (err) {
+        if (err instanceof TypeError) {
+          console.log("Didn't see any News data..");
+        } else {
+          throw err;
+        }
       }
     },
     async function () {
@@ -185,24 +239,34 @@ function sample(){
       } catch (err) {
         if (err instanceof webModels.ErrorResponse) {
           console.log("Encountered exception. " + err.message);
+        } else {
+          throw err;
         }
       }
       console.log("Searched for Query# \" Lady Gaga \"");
 
-      if (result.videos.value.length > 0){
-        // find the first web page
-        let firstVideoResult = result.videos.value[0];
-        if (firstVideoResult){
-          console.log("Video Results: " + result.videos.value.length);
-          console.log("First Video page name: " + firstVideoResult.name);
-          console.log("First Video page URL: " + firstVideoResult.contentUrl);
+      try {
+        if (result.videos.value.length > 0) {
+          // find the first web page
+          let firstVideoResult = result.videos.value[0];
+          if (firstVideoResult) {
+            console.log("Video Results: " + result.videos.value.length);
+            console.log("First Video page name: " + firstVideoResult.name);
+            console.log("First Video page URL: " + firstVideoResult.contentUrl);
+          }
+          else {
+            console.log("Couldn't find any video result!");
+          }
         }
         else {
-          console.log("Couldn't find any video result!");
+          throw new TypeError();
         }
-      }
-      else {
-        console.log("Didn't see any data..");
+      } catch (err) {
+        if (err instanceof TypeError) {
+          console.log("Didn't see any Web data..");
+        } else {
+          throw err;
+        }
       }
     },
 
@@ -214,7 +278,7 @@ function sample(){
       })
     }
   ], (err) => {
-    throw(err);
+    throw (err);
   });
 }
 
