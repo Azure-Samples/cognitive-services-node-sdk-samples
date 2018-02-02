@@ -23,7 +23,7 @@ This project framework provides examples for the following services:
 ## Run this sample
 
 
-1. If you don't already have it, [get node.js](https://nodejs.org).
+1. If you don't already have it, [get node.js](https://nodejs.org). Install a version greater than 8.0.
 
 1. Clone the repository.
 
