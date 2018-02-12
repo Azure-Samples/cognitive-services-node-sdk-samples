@@ -24,7 +24,10 @@ const samples = {
   ImageListManagement: './contentModerator/ImageListManagement',
   ImageJobs: './contentModerator/ImageJobs',
   ImageReviews: './contentModerator/ImageReviews',
-  TextModeration: './contentModerator/TextModeration'
+  TermListManagement: './contentModerator/TermListManagement',
+  TextModeration: './contentModerator/TextModeration',
+  VideoReviews: './contentModerator/VideoReviews',
+  VideoTranscriptReviews: './contentModerator/VideoTranscriptReviews'
 }
 
 ///////////////////////////////////////////

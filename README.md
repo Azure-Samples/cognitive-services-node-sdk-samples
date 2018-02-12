@@ -1,6 +1,6 @@
-# Bing SDK Samples
+# Cognitive Services SDK Samples
 
-These samples will show you how to get up and running using the SDKs for various Bing Search services. They'll cover a few rudimentary use cases and hopefully express best practices for interacting with the data from these APIs.
+These samples will show you how to get up and running using the SDKs for various Cognitive Services. They'll cover a few rudimentary use cases and hopefully express best practices for interacting with the data from these APIs.
 
 ## Features
 
@@ -65,7 +65,4 @@ This project framework provides examples for the following services:
 
 1. Navigate through the console app to play with the examples. If a sample ends prematurely and does not return results, please make sure the service-key being used is valid for that service.
 
-To see the code of each example, simply look at the examples in the Samples folder. They are written to be isolated in scope so that you can see only what you're interested in. You can also run the individual samples directly: 
-    ```
-    node <path to sample>
-    ```
+To see the code of each example, simply look at the examples in the Samples folder. They are written to be isolated in scope so that you can see only what you're interested in.
