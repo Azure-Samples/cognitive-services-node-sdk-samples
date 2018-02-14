@@ -19,9 +19,10 @@
   "main": "./index.js",
   "license": "MIT",
   "dependencies": {
-    "azure-cognitiveservices-search": "^1.0.0-preview",
     "azure-cognitiveservices-language": "^1.0.0-preview",
+    "azure-cognitiveservices-search": "^1.0.0-preview",
     "azure-cognitiveservices-vision": "^1.0.0-preview",
+    "utf8": "^3.0.0",
     "ms-rest": "^2.3.0",
     "ms-rest-azure": "^2.5.0"
   },

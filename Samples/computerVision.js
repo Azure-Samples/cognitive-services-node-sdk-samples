@@ -33,7 +33,7 @@ function sample() {
   async.series([
     async function () {
       console.log("1. This will analyze a house image and describe it.");
-      let fileStream = fs.createReadStream('Images/house.jpg');
+      let fileStream = fs.createReadStream('Data/house.jpg');
 
       let result = await computerVisionApiClient.analyzeImageInStream(fileStream, {
         visualFeatures: ["Categories", "Tags", "Description", "Color", "Faces", "ImageType"]
