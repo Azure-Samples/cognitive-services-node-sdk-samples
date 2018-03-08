@@ -29,11 +29,11 @@ let videoSearchApiClient = new Search.VideoSearchAPIClient(credentials);
 function sample(){
   async.series([
     async function () {
-      console.log("1. This will search videos for (Nasa CubeSat) then verify number of results and print out id, name and url of first video result");
+      console.log("1. This will search videos for (SwiftKey) then verify number of results and print out id, name and url of first video result");
       let result;
       try {
-        result = await videoSearchApiClient.videosOperations.search("Nasa CubeSat");
-        console.log("Search videos for query \"Nasa CubeSat\"");
+        result = await videoSearchApiClient.videosOperations.search("SwiftKey");
+        console.log("Search videos for query \"SwiftKey\"");
       } catch (err) {
         console.log("Encountered exception. " + err.message);
       }
@@ -51,15 +51,15 @@ function sample(){
     },
     async function () {
       console.log(os.EOL);
-      console.log("2. This will search videos for (Interstellar Trailer) that is free, short and 1080p resolution then verify number of results and print out id, name and url of first video result");
+      console.log("2. This will search videos for (Bellevue Trailer) that is free, short and 1080p resolution then verify number of results and print out id, name and url of first video result");
       let result;
       try {
-        result = await videoSearchApiClient.videosOperations.search("Interstellar Trailer", {
+        result = await videoSearchApiClient.videosOperations.search("Bellevue  Trailer", {
           pricing: "Free",
           length: "Short",
           resolution: "HD1080p"
         });
-        console.log("Search videos for query \"Interstellar Trailer\" that is free, short and 1080p resolution");
+        console.log("Search videos for query \"Bellevue  Trailer\" that is free, short and 1080p resolution");
       } catch (err) {
         console.log("Encountered exception. " + err.message);
       }
@@ -128,16 +128,16 @@ function sample(){
     },
     async function () {
       console.log(os.EOL);
-      console.log("4. This will search videos for (Interstellar Trailer) and then search for detail information of the first video");
+      console.log("4. This will search videos for (Bellevue Trailer) and then search for detail information of the first video");
       let result;
       let videoDetail;
       try {
-        result = await videoSearchApiClient.videosOperations.search("Interstellar Trailer");
+        result = await videoSearchApiClient.videosOperations.search("Bellevue Trailer");
         if (!result || !result.value || result.value.length === 0) {
           console.log("Couldn't find video results!");
         } else {
           result = result.value[0];
-          videoDetail = await videoSearchApiClient.videosOperations.details("Interstellar Trailer", {
+          videoDetail = await videoSearchApiClient.videosOperations.details("Bellevue Trailer", {
             id: result.videoId,
             modules: ['All']
           });
