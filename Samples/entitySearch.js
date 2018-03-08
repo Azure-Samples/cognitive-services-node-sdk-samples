@@ -31,10 +31,10 @@ let entityModels = entitySearchApiClient.models;
 function sample() {
   async.series([
     async function () {
-      console.log("1. This will look up a single entity (tom cruise) and print out a short description about them.");
+      console.log("1. This will look up a single entity (Satya Nadella) and print out a short description about them.");
       let result;
       try {
-        result = await entitySearchApiClient.entitiesOperations.search("tom cruise");
+        result = await entitySearchApiClient.entitiesOperations.search("Satya Nadella");
       } catch (err) {
         if (err instanceof entityModels.ErrorResponse) {
           console.log("Encountered exception. " + err.message);
@@ -46,11 +46,11 @@ function sample() {
           (thing) => thing.entityPresentationInfo.entityScenario == "DominantEntity"
         );
         if (mainEntity) {
-          console.log("Searched for \"Tom Cruise\" and found a dominant entity with this description:");
+          console.log("Searched for \"Satya Nadella\" and found a dominant entity with this description:");
           console.log(mainEntity.description);
         }
         else {
-          console.log("Couldn't find main entity tom cruise!");
+          console.log("Couldn't find main entity Satya Nadella!");
         }
       }
       else {
@@ -59,10 +59,10 @@ function sample() {
     },
     async function () {
       console.log(os.EOL);
-      console.log("2. This will handle disambiguation results for an ambiguous query (harry potter).");
+      console.log("2. This will handle disambiguation results for an ambiguous query (William Gates).");
       let result;
       try {
-        result = await entitySearchApiClient.entitiesOperations.search("harry potter");
+        result = await entitySearchApiClient.entitiesOperations.search("William Gates");
       } catch (err) {
         if (err instanceof entityModels.ErrorResponse) {
           console.log("Encountered exception. " + err.message);
@@ -78,12 +78,12 @@ function sample() {
         )
 
         if (mainEntity) {
-          console.log(util.format("Searched for \"harry potter\" and found a dominant entity with type hint \"%s\" " +
+          console.log(util.format("Searched for \"William Gates\" and found a dominant entity with type hint \"%s\" " +
             "with this description:", mainEntity.entityPresentationInfo.entityTypeHints));
           console.log(mainEntity.description);
         }
         else {
-          console.log("Couldn't find a reliable dominant entity for harry potter!");
+          console.log("Couldn't find a reliable dominant entity for William Gates!");
         }
 
         if (disambigEntities.length > 0) {
@@ -99,7 +99,7 @@ function sample() {
           console.log(stringBuilder + "?");
         }
         else {
-          console.log("We didn't find any disambiguation items for harry potter, so we must be certain what you're talking about!");
+          console.log("We didn't find any disambiguation items for William Gates, so we must be certain what you're talking about!");
         }
       }
       else {
@@ -108,10 +108,10 @@ function sample() {
     },
     async function () {
       console.log(os.EOL);
-      console.log("3. This will look up a single restaurant (john howie bellevue) and print out its phone number.");
+      console.log("3. This will look up a single business (Microsoft Store Bellevue) and print out its phone number.");
       let httpResponse;
       try {
-        httpResponse = await entitySearchApiClient.entitiesOperations.searchWithHttpOperationResponse("john howie bellevue");
+        httpResponse = await entitySearchApiClient.entitiesOperations.searchWithHttpOperationResponse("Microsoft Store Bellevue");
       } catch (err) {
         if (err instanceof entityModels.ErrorResponse) {
           console.log("Encountered exception. " + err.message);
@@ -119,9 +119,9 @@ function sample() {
       }
       let result = JSON.parse(httpResponse.response.body);
       if (((result.places || {}).value || {}).length > 0) {
-        let restaurant = result.places.value[0];
-        if (restaurant) {
-          console.log("Searched for \"John Howie Bellevue\" and found a restaurant with this phone number:");
+        let business = result.places.value[0];
+        if (business) {
+          console.log("Searched for \"Microsoft Store Bellevue\" and found a business with this phone number:");
           console.log(restaurant.telephone);
         }
         else {
@@ -171,7 +171,7 @@ function sample() {
       console.log("5. This triggers a bad request and shows how to read the error response.");
       let result;
       try {
-        result = await entitySearchApiClient.entitiesOperations.search("tome cruise", { market: "no-ty" });
+        result = await entitySearchApiClient.entitiesOperations.search("Satya Nadella", { market: "no-ty" });
       } catch (err) {
         if (err instanceof entityModels.ErrorResponse) {
           // The status code of the error should be a good indication of what occurred.
