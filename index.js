@@ -19,7 +19,8 @@ const samples = {
     VideoSearch: './Samples/videoSearch',
     NewsSearch: './Samples/newsSearch',
     ImageSearch: './Samples/imageSearch',
-    CustomSearch: './Samples/customSearch'
+    CustomSearch: './Samples/customSearch',
+    VisualSearch: './Samples/visualSearch'
   },
   Vision: {
     ComputerVision: './Samples/computerVision',
