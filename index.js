@@ -20,7 +20,8 @@ const samples = {
     NewsSearch: './Samples/newsSearch',
     ImageSearch: './Samples/imageSearch',
     CustomSearch: './Samples/customSearch',
-    VisualSearch: './Samples/visualSearch'
+    VisualSearch: './Samples/visualSearch',
+    AutoSuggest: './Samples/autoSuggest'
   },
   Vision: {
     ComputerVision: './Samples/computerVision',
