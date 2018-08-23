@@ -46,34 +46,71 @@ function sample() {
     
     appCreationPromise.then(appId => {
         console.log("Created app %s", appId)
-        return appId
+        console.log("We'll create two new entities.")
+        console.log("The \"Destination\" simple entity will hold the flight destination.")
+        console.log("The \"Class\" hierarchical entity will accept \"First\", \"Business\" and \"Economy\" values.")
     })
     
-    // Add information into the model
-    console.log("We'll create two new entities.")
-    console.log("The \"Destination\" simple entity will hold the flight destination.")
-    console.log("The \"Class\" hierarchical entity will accept \"First\", \"Business\" and \"Economy\" values.")
-
     const destinationName = "Destination"
-    appCreationPromise.then(appId => {
-        const destinationCreateObject = { name: destinationName }
-        return client.model.addEntity(appId, versionId, destinationCreateObject) 
-    }).then(destinationId => {
+    const destinationCreationPromise = appCreationPromise.then(appId => {
+        const simpleEntity = { name: destinationName }
+        return client.model.addEntity(appId, versionId, simpleEntity) 
+    })
+    
+    destinationCreationPromise.then(destinationId => {
         console.log("%s simple entity created with id %s", destinationName, destinationId)
     }).catch(errorHandler)
 
     const className = "Class"
-    appCreationPromise.then(appId => {
+    const classCreationPromise = appCreationPromise.then(appId => {
         const hierarchicalEntity = { 
             name: className, 
             children: [ "First", "Business", "Economy" ]
         }
 
         return client.model.addHierarchicalEntity(appId, versionId, hierarchicalEntity)
-    }).then(classId => {
+    }).catch(errorHandler)
+    
+    classCreationPromise.then(classId => {
         console.log("%s hierarchical entity created with id %s", className, classId)
-    })
-    .catch(errorHandler)
+    }).catch(errorHandler)
+
+    const flightName = "Flight"
+    const flightCreationPromise = Promise.all([ appCreationPromise, destinationCreationPromise, classCreationPromise ]).then(ids => {
+        const appId = ids[0]
+        console.log("\nWe'll now create the \"Flight\" composite entity including \"Class\" and \"Destination\".")
+
+        const compositeEntity = {
+            name: flightName,
+            children: [ className, destinationName ]
+        }
+
+        return client.model.addCompositeEntity(appId, versionId, compositeEntity)
+    }).catch(errorHandler)
+
+    flightCreationPromise.then(flightId => {
+        console.log("%s composite entity created with id %s", flightName, flightId)
+    }).catch(errorHandler)
+
+    const findEconomyToMadrid = "find flights in economy to Madrid"
+    const findFirstToLondon = "find flights to London in first class"
+    flightCreationPromise.then(_ => {
+        console.log("\nWe'll create a new \"FindFlights\" intent including the following utterances:")
+        console.log(" - %s", findEconomyToMadrid)
+        console.log(" - %s", findFirstToLondon)
+    }).catch(errorHandler)
+
+    const intentName = "FindFlight"
+    const intentCreationPromise = appCreationPromise.then(appId => {
+        const intentModel = {
+            name: intentName
+        }
+        return client.model.addIntent(appId, versionId, intentModel)
+    }).catch(errorHandler)
+
+    intentCreationPromise.then(intentId => {
+        console.log("%s intent created with id %s", intentName, intentId)
+    }).catch(errorHandler)
 }
 
 sample()
