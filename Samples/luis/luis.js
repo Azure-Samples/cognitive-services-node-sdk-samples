@@ -22,6 +22,11 @@ const serviceKey = process.env[keyVar];
 //     Entrypoint for sample script      //
 ///////////////////////////////////////////
 
+/**
+ * Authoring sample.
+ * This will create a LUIS Booking application, train and publish it.
+ * @param {string} serviceKey 
+ */
 async function bookingApp(serviceKey) {
     const credentials = new CognitiveServicesCredentials(serviceKey);
     const luisEndpoint = "https://westus.api.cognitive.microsoft.com"
@@ -144,9 +149,82 @@ async function bookingApp(serviceKey) {
     console.log("Your app is published. You can now go to test it on\n%s", endpoint)
 }
 
+/**
+ * Managing
+ * This will show how to manage your LUIS applications.
+ * @param {string} serviceKey 
+ */
+async function management(serviceKey) {
+    const credentials = new CognitiveServicesCredentials(serviceKey);
+    const luisEndpoint = "https://westus.api.cognitive.microsoft.com"
+
+    const client = new LUISAuthoringClient(credentials, luisEndpoint)
+
+    // Create a LUIS app
+    const defaultAppName = "Contoso-" + (new Date().getTime())
+    const versionId = "0.1"
+
+    console.log("Creating App %s, version %s", defaultAppName, versionId)
+
+    const description = "New App created with LUIS Node.js sample"
+    const applicationCreateObject = {
+        culture: "en-us",
+        initialVersionId: versionId,
+        description: description,
+        name: defaultAppName,
+    }
+
+    const appId = await client.apps.add(applicationCreateObject)
+
+    console.log("Created app %s", appId)
+
+    // List app
+    console.log("\nList all apps")
+    const apps = await client.apps.list()
+    apps.forEach(app => { console.log(app.name) })
+
+    // Cloning a version
+    console.log("\nCloning version 0.1 into 0.2")
+    await client.versions.clone(appId, "0.1", { versionCloneObject: { version: "0.2" } })
+    console.log("Your app version has been cloned.")
+
+    // Export the version
+    console.log("\nExport version 0.2 as JSON")
+    const luisApp = await client.versions.exportMethod(appId, "0.2")
+    const luisAppAsJson = JSON.stringify(luisApp)
+    // You can now save this JSON string as a file
+
+    // Import the version
+    console.log("\nImport previously exported version as 0.3")
+    await client.versions.importMethod(appId, JSON.parse(luisAppAsJson), { versionId: "0.3" })
+
+    // Listing versions
+    console.log("\nList all versions in this app")
+    const versions = await client.versions.list(appId)
+    versions.forEach(version => {
+        console.log(`\t->Version: '${version.version}', training status: ${version.trainingStatus}`)
+    })
+
+    // Print app details
+    console.log(`\nPrint app \"${defaultAppName}\" details`)
+    const appDetails = await client.apps.get(appId)
+    console.log(appDetails)
+
+    // Print version details
+    console.log(`\nPrint version \"${versionId}\" details`)
+    const versionDetails = await client.versions.get(appId, versionId)
+    console.log(versionDetails)
+
+    // Delete an app
+    console.log(`\nDelete app \"${defaultAppName}\"`)
+    await client.apps.deleteMethod(appId)
+    console.log("App deleted!")
+}
+
 (async () => {
     try {
         await bookingApp(serviceKey);
+        await management(serviceKey);
     } catch (e) {
         console.log(e)
     }
