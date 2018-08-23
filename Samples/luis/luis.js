@@ -49,35 +49,30 @@ function sample() {
         return appId
     })
     
-    appCreationPromise.then(appId => {
-        // Add information into the model
-        console.log("We'll create two new entities.")
-        console.log("The \"Destination\" simple entity will hold the flight destination.")
-        console.log("The \"Class\" hierarchical entity will accept \"First\", \"Business\" and \"Economy\" values.")
+    // Add information into the model
+    console.log("We'll create two new entities.")
+    console.log("The \"Destination\" simple entity will hold the flight destination.")
+    console.log("The \"Class\" hierarchical entity will accept \"First\", \"Business\" and \"Economy\" values.")
 
-        const destinationName = { name: "Destination" }
-        return Promise.all([
-            destinationName.name,
-            client.model.addEntity(appId, versionId, destinationName) 
-        ])
-    }).then(destination => {
-        const destinationId = destination[1]
-        console.log("%s simple entity created with id %s", destination[0], destinationId)
+    const destinationName = "Destination"
+    appCreationPromise.then(appId => {
+        const destinationCreateObject = { name: destinationName }
+        return client.model.addEntity(appId, versionId, destinationCreateObject) 
+    }).then(destinationId => {
+        console.log("%s simple entity created with id %s", destinationName, destinationId)
     }).catch(errorHandler)
 
     const className = "Class"
     appCreationPromise.then(appId => {
         const hierarchicalEntity = { 
-            name: "Class", 
+            name: className, 
             children: [ "First", "Business", "Economy" ]
         }
 
-        return Promise.all([
-            hierarchicalEntity.name,
-            client.model.addHierarchicalEntity(appId, versionId, hierarchy)
-        ])
+        return client.model.addHierarchicalEntity(appId, versionId, hierarchicalEntity)
     }).then(classId => {
-        console.log("%s simple entity created with id %s", destination[0], destinationId)
+        console.log("%s hierarchical entity created with id %s", className, classId)
+    })
     .catch(errorHandler)
 }
 
