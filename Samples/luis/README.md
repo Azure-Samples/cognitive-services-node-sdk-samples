@@ -1,7 +1,7 @@
 ---
 services: cognitive-services, luis, language-understanding
-platforms: python
-author: cahann, lmazuel
+platforms: Node.js
+author: cahann, lmazuel, kamip
 ---
 
 # Cognitive Services: LUIS Runtime Sample
@@ -40,7 +40,7 @@ If you want to test this sample, you have to import the pre-build [LuisApp.json]
 
 Once you imported the application you'll need to "train" the model ([Training](https://docs.microsoft.com/en-us/azure/cognitive-services/luis/train-test)) before you can "Publish" the model in an HTTP endpoint. For more information, take a look at [Publishing a Model](https://docs.microsoft.com/en-us/azure/cognitive-services/luis/publishapp).
 
-Finally, edit the [luis_runtime_samples.py](luis_runtime_samples.py) file and update the attribute placeholders with the values corresponding to your Application and Azure Region where the application was deployed.
+Finally, edit the [luisRuntime.js](luisRuntime.js) file and update the attribute placeholders with the values corresponding to your Application and Azure Region where the application was deployed.
 
 #### Where to find the Application ID and Subscription Key
 
@@ -65,23 +65,18 @@ One of the key problems in human-computer interactions is the ability of the com
 
 Once your model is set, you can invoke the LUIS Runtime API to analize user input and obtain its intent and possible entities.
 
-From Python, use the [azure-cognitiveservices-language-luis](http://pypi.python.org/pypi/azure-cognitiveservices-language-luis) package.
+From NPM, use the [azure-cognitiveservices-luis-authoring](https://www.npmjs.com/package/azure-cognitiveservices-luis-authoring) and  [azure-cognitiveservices-luis-runtime](https://www.npmjs.com/package/azure-cognitiveservices-luis-runtime)  packages.
 
-````python
-from azure.cognitiveservices.language.luis.runtime import LUISRuntimeClient
-from msrest.authentication import CognitiveServicesCredentials
+````javascript
+const CognitiveServicesCredentials = require('ms-rest-azure').CognitiveServicesCredentials;
+const LUISRuntimeClient = require("azure-cognitiveservices-luis-runtime");
 
 // Create client with SuscriptionKey and Azure region
-client = LUISRuntimeClient(
-    'https://westus.api.cognitive.microsoft.com',             # Change "westus" to your region if necessary
-    CognitiveServicesCredentials("[LUIS_SUBSCRIPTION_KEY]"),  # Put your LUIS Subscription key
-)
+const credentials = new CognitiveServicesCredentials(subscriptionKey);
+const client = new LUISRuntimeClient(credentials, "https://westus.api.cognitive.microsoft.com")
 
 // Predict
-luis_result = client.prediction.resolve(
-    "[LUIS_APPLICATION_ID]",                                  # Put your LUIS Application ID
-    "Text to Predict or User input"
-)
+const result = await client.prediction.resolve("[LUIS_APPLICATION_ID]", "Text to Predict or User input")
 ````
 
 The LuisResult object contains the possible detected intents and entities that could be extracted from the input.
@@ -90,7 +85,16 @@ The LuisResult object contains the possible detected intents and entities that c
 
 You will see the following when running the application:
 
-![Sample Outcome](images/outcome.png)
+```
+Executing query: find flights in economy to Madrid
+Detected intent: FindFlight (score: 95.57%)
+Detected entities:
+	-> Entity 'economy' (type: Class, score: 85.95%)
+	-> Entity 'madrid' (type: Destination, score: 89.44%)
+	-> Entity 'economy to madrid' (type: Flight, score: 81.03%)
+Complete result object as dictionnary
+{"query":"find flights in economy to Madrid","topScoringIntent":{"intent":"FindFlight","score":0.9557334},"entities":[{"entity":"economy","type":"Class","startIndex":16,"endIndex":22,"score":0.8595318},{"entity":"madrid","type":"Destination","startIndex":27,"endIndex":32,"score":0.8943938},{"entity":"economy to madrid","type":"Flight","startIndex":16,"endIndex":32,"score":0.8102929}],"compositeEntities":[{"parentType":"Flight","value":"economy to madrid","children":[{"type":"Class","value":"economy"},{"type":"Destination","value":"madrid"}]}]}
+```
 
 ### More Information
 
