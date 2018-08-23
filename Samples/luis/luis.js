@@ -41,9 +41,44 @@ function sample() {
         name: defaultAppName,
     }
 
-    client.apps.add(applicationCreateObject).then(appId => {
+    const errorHandler = error => console.log(error)
+    const appCreationPromise = client.apps.add(applicationCreateObject)
+    
+    appCreationPromise.then(appId => {
         console.log("Created app %s", appId)
+        return appId
     })
+    
+    appCreationPromise.then(appId => {
+        // Add information into the model
+        console.log("We'll create two new entities.")
+        console.log("The \"Destination\" simple entity will hold the flight destination.")
+        console.log("The \"Class\" hierarchical entity will accept \"First\", \"Business\" and \"Economy\" values.")
+
+        const destinationName = { name: "Destination" }
+        return Promise.all([
+            destinationName.name,
+            client.model.addEntity(appId, versionId, destinationName) 
+        ])
+    }).then(destination => {
+        const destinationId = destination[1]
+        console.log("%s simple entity created with id %s", destination[0], destinationId)
+    }).catch(errorHandler)
+
+    const className = "Class"
+    appCreationPromise.then(appId => {
+        const hierarchicalEntity = { 
+            name: "Class", 
+            children: [ "First", "Business", "Economy" ]
+        }
+
+        return Promise.all([
+            hierarchicalEntity.name,
+            client.model.addHierarchicalEntity(appId, versionId, hierarchy)
+        ])
+    }).then(classId => {
+        console.log("%s simple entity created with id %s", destination[0], destinationId)
+    .catch(errorHandler)
 }
 
 sample()
