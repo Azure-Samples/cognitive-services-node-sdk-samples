@@ -22,12 +22,12 @@ const serviceKey = process.env[keyVar];
 //     Entrypoint for sample script      //
 ///////////////////////////////////////////
 
-const credentials = new CognitiveServicesCredentials(serviceKey);
-const endpoint = "https://westus.api.cognitive.microsoft.com"
+async function bookingApp(serviceKey) {
+    const credentials = new CognitiveServicesCredentials(serviceKey);
+    const luisEndpoint = "https://westus.api.cognitive.microsoft.com"
+    
+    const client = new LUISAuthoringClient(credentials, luisEndpoint)
 
-const client = new LUISAuthoringClient(credentials, endpoint)
-
-function sample() {
     const defaultAppName = "Contoso-" + (new Date().getTime())
     const versionId = "0.1"
 
@@ -41,160 +41,117 @@ function sample() {
         name: defaultAppName,
     }
 
-    const errorHandler = error => console.log(error)
-    const appCreationPromise = client.apps.add(applicationCreateObject)
+    const appId = await client.apps.add(applicationCreateObject)
     
-    appCreationPromise.then(appId => {
-        console.log("Created app %s", appId)
-        console.log("We'll create two new entities.")
-        console.log("The \"Destination\" simple entity will hold the flight destination.")
-        console.log("The \"Class\" hierarchical entity will accept \"First\", \"Business\" and \"Economy\" values.")
-    })
+    console.log("Created app %s", appId)
+    console.log("We'll create two new entities.")
+    console.log("The \"Destination\" simple entity will hold the flight destination.")
+    console.log("The \"Class\" hierarchical entity will accept \"First\", \"Business\" and \"Economy\" values.")
     
     const destinationName = "Destination"
-    const destinationCreationPromise = appCreationPromise.then(appId => {
-        const simpleEntity = { name: destinationName }
-        return client.model.addEntity(appId, versionId, simpleEntity) 
-    })
+    const simpleEntity = { name: destinationName }
+    const destinationId = await client.model.addEntity(appId, versionId, simpleEntity) 
     
-    destinationCreationPromise.then(destinationId => {
-        console.log("%s simple entity created with id %s", destinationName, destinationId)
-    }).catch(errorHandler)
+    console.log("%s simple entity created with id %s", destinationName, destinationId)
 
     const className = "Class"
-    const classCreationPromise = appCreationPromise.then(appId => {
-        const hierarchicalEntity = { 
-            name: className, 
-            children: [ "First", "Business", "Economy" ]
-        }
+    const hierarchicalEntity = { 
+        name: className, 
+        children: [ "First", "Business", "Economy" ]
+    }
 
-        return client.model.addHierarchicalEntity(appId, versionId, hierarchicalEntity)
-    }).catch(errorHandler)
+    const classId = await client.model.addHierarchicalEntity(appId, versionId, hierarchicalEntity)
     
-    classCreationPromise.then(classId => {
-        console.log("%s hierarchical entity created with id %s", className, classId)
-    }).catch(errorHandler)
+    console.log("%s hierarchical entity created with id %s", className, classId)
 
     const flightName = "Flight"
-    const flightCreationPromise = Promise.all([ appCreationPromise, destinationCreationPromise, classCreationPromise ]).then(ids => {
-        const appId = ids[0]
-        console.log("\nWe'll now create the \"Flight\" composite entity including \"Class\" and \"Destination\".")
+    console.log("\nWe'll now create the \"Flight\" composite entity including \"Class\" and \"Destination\".")
 
-        const compositeEntity = {
-            name: flightName,
-            children: [ className, destinationName ]
-        }
+    const compositeEntity = {
+        name: flightName,
+        children: [ className, destinationName ]
+    }
 
-        return client.model.addCompositeEntity(appId, versionId, compositeEntity)
-    }).catch(errorHandler)
+    const flightId = await client.model.addCompositeEntity(appId, versionId, compositeEntity)
 
-    flightCreationPromise.then(flightId => {
-        console.log("%s composite entity created with id %s", flightName, flightId)
-    }).catch(errorHandler)
+    console.log("%s composite entity created with id %s", flightName, flightId)
 
     const findEconomyToMadrid = "find flights in economy to Madrid"
     const findFirstToLondon = "find flights to London in first class"
-    flightCreationPromise.then(_ => {
+
         console.log("\nWe'll create a new \"FindFlights\" intent including the following utterances:")
         console.log(" - %s", findEconomyToMadrid)
         console.log(" - %s", findFirstToLondon)
-    }).catch(errorHandler)
 
     const intentName = "FindFlight"
-    const intentCreationPromise = appCreationPromise.then(appId => {
-        const intentModel = {
-            name: intentName
+    const intentModel = {
+        name: intentName
+    }
+
+    const intentId = await client.model.addIntent(appId, versionId, intentModel)
+    console.log("%s intent created with id %s", intentName, intentId)
+
+    function getExampleLabel(utterance, entityName, value) {
+        const startCharIndex = utterance.toLowerCase().indexOf(value.toLowerCase())
+
+        return {
+            entityName: entityName,
+            startCharIndex: startCharIndex,
+            endCharIndex: startCharIndex + value.length
         }
-        return client.model.addIntent(appId, versionId, intentModel)
-    }).catch(errorHandler)
+    }
 
-    intentCreationPromise.then(intentId => {
-        console.log("%s intent created with id %s", intentName, intentId)
-    }).catch(errorHandler)
+    const utterances = [{
+        text: findEconomyToMadrid,
+        intentName: intentName,
+        entityLabels: [
+            getExampleLabel(findEconomyToMadrid, "Flight", "economy to madrid"),
+            getExampleLabel(findEconomyToMadrid, "Destination", "Madrid"),
+            getExampleLabel(findEconomyToMadrid, "Class", "economy"),
+        ]
+    }, {
+        text: findFirstToLondon,
+        intentName: intentName,
+        entityLabels: [
+            getExampleLabel(findEconomyToMadrid, "Flight", "London in first class"),
+            getExampleLabel(findEconomyToMadrid, "Destination", "London"),
+            getExampleLabel(findEconomyToMadrid, "Class", "first"),
+        ]
+    }]
 
-    const batchPromise = Promise.all([ appCreationPromise, classCreationPromise, flightCreationPromise, intentCreationPromise ]).then(ids => {
-        const appId = ids[0]
-        function getExampleLabel(utterance, entityName, value) {
-            const startCharIndex = utterance.toLowerCase().indexOf(value.toLowerCase())
+    await client.examples.batch(appId, versionId, utterances)
     
-            return {
-                entityName: entityName,
-                startCharIndex: startCharIndex,
-                endCharIndex: startCharIndex + value.length
-            }
-        }
+    console.log("\nUtterances added to the %s intent", intentName)
 
-        const utterances = [{
-            text: findEconomyToMadrid,
-            intentName: intentName,
-            entityLabels: [
-                getExampleLabel(findEconomyToMadrid, "Flight", "economy to madrid"),
-                getExampleLabel(findEconomyToMadrid, "Destination", "Madrid"),
-                getExampleLabel(findEconomyToMadrid, "Class", "economy"),
-            ]
-        }, {
-            text: findFirstToLondon,
-            intentName: intentName,
-            entityLabels: [
-                getExampleLabel(findEconomyToMadrid, "Flight", "London in first class"),
-                getExampleLabel(findEconomyToMadrid, "Destination", "London"),
-                getExampleLabel(findEconomyToMadrid, "Class", "first"),
-            ]
-        }]
+    console.log("\nWe'll start training your app...")
+    await client.train.trainVersion(appId, versionId)
 
-        return client.examples.batch(appId, versionId, utterances)
-    }).catch(errorHandler)
-    
-    batchPromise.then(_ => {
-        console.log("\nUtterances added to the %s intent", intentName)
-    }).catch(errorHandler)
+    let isTrained = false
+    const checkIfTrained = trainingStatus => trainingStatus.details.status == "UpToDate" || trainingStatus.details.status == "Success"
 
-    const trainPromise = Promise.all([ appCreationPromise, batchPromise ]).then(ids => {
-        console.log("\nWe'll start training your app...")
-        const appId = ids[0]
-        return client.train.trainVersion(appId, versionId)
-    }).catch(errorHandler)
+    do {
+        console.log("Waiting until your app is trained...")
+        let trainingStatuses = await client.train.getStatus(appId, versionId)
+        isTrained = trainingStatuses.every(checkIfTrained)
+    } while (!isTrained)
 
-    const isTrainedPromise = Promise.all([ appCreationPromise, trainPromise ]).then(ids => { 
-        const appId = ids[0]
-        return new Promise((resolve, reject) => {
-            let isTrained = false
-            const checkIfTrained = trainingStatus => trainingStatus.details.status == "UpToDate" || trainingStatus.details.status == "Success"
+    console.log("Your app is trained. You can now go to the LUIS portal and test it!")
+    console.log("\nWe'll start publishing your app...")
 
-            const poll = () => {
-                console.log("Polling...")
-                client.train.getStatus(appId, versionId).then(trainingStatuses => {
-                    isTrained = trainingStatuses.every(checkIfTrained) 
-                    if (isTrained) {
-                        resolve(trainingStatuses)
-                    } else {
-                        setTimeout(poll, 5000)
-                    }
-                });
-            }
+    const publishResult = await client.apps.publish(appId, { 
+        versionId: versionId,
+        isStaging: false,
+        region: "westus"
+    })
 
-            poll()
-        })
-    }).catch(errorHandler)
-
-    isTrainedPromise.then(_ => console.log(_)).catch(errorHandler)
-
-    const publishPromise = Promise.all([ appCreationPromise, isTrainedPromise ]).then(ids => {
-        console.log("Your app is trained. You can now go to the LUIS portal and test it!")
-        console.log("\nWe'll start publishing your app...")
-
-        const appId = ids[0]
-        return client.apps.publish(appId, { 
-            versionId: versionId,
-            isStaging: false,
-            region: "westus"
-        })
-    }).catch(errorHandler)
-
-    publishPromise.then(publishResult => {
-        const endpoint = `${publishResult.endpointUrl}?subscription-key=${serviceKey}&q=`
-        console.log("Your app is published. You can now go to test it on\n%s", endpoint)
-    }).catch(errorHandler)
+    const endpoint = `${publishResult.endpointUrl}?subscription-key=${serviceKey}&q=`
+    console.log("Your app is published. You can now go to test it on\n%s", endpoint)
 }
 
-sample()
+(async () => {
+    try {
+        await bookingApp(serviceKey);
+    } catch (e) {
+        console.log(e)
+    }
+})();
