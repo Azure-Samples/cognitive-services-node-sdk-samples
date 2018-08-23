@@ -16,7 +16,7 @@ if (!process.env[keyVar]) {
     throw new Error('please set/export the following environment variable: ' + keyVar);
 }
 
-const serviceKey = process.env[keyVar];
+const subscriptionKey = process.env[keyVar];
 
 ///////////////////////////////////////////
 //     Entrypoint for sample script      //
@@ -25,13 +25,11 @@ const serviceKey = process.env[keyVar];
 /**
  * Authoring sample.
  * This will create a LUIS Booking application, train and publish it.
- * @param {string} serviceKey 
+ * @param {string} subscriptionKey 
  */
-async function bookingApp(serviceKey) {
-    const credentials = new CognitiveServicesCredentials(serviceKey);
-    const luisEndpoint = "https://westus.api.cognitive.microsoft.com"
-
-    const client = new LUISAuthoringClient(credentials, luisEndpoint)
+async function bookingApp(subscriptionKey) {
+    const credentials = new CognitiveServicesCredentials(subscriptionKey);
+    const client = new LUISAuthoringClient(credentials, "https://westus.api.cognitive.microsoft.com")
 
     const defaultAppName = "Contoso-" + (new Date().getTime())
     const versionId = "0.1"
@@ -145,7 +143,7 @@ async function bookingApp(serviceKey) {
         region: "westus"
     })
 
-    const endpoint = `${publishResult.endpointUrl}?subscription-key=${serviceKey}&q=`
+    const endpoint = `${publishResult.endpointUrl}?subscription-key=${subscriptionKey}&q=`
     console.log("Your app is published. You can now go to test it on\n%s", endpoint)
 }
 
@@ -223,8 +221,8 @@ async function management(serviceKey) {
 
 (async () => {
     try {
-        await bookingApp(serviceKey);
-        await management(serviceKey);
+        await bookingApp(subscriptionKey);
+        await management(subscriptionKey);
     } catch (e) {
         console.log(e)
     }
