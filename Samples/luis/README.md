@@ -63,7 +63,7 @@ You'll need these two values to configure the LuisDialog through the LuisModel a
 
 One of the key problems in human-computer interactions is the ability of the computer to understand what a person wants, and to find the pieces of information that are relevant to their intent. In the LUIS application, you will bundle together the intents and entities that are important to your task. Read more about [Planning an Application](https://docs.microsoft.com/en-us/azure/cognitive-services/luis/plan-your-app) in the [LUIS Docs](https://docs.microsoft.com/en-us/azure/cognitive-services/luis/).
 
-Once your model is set, you can invoke the LUIS Runtime API to analize user input and obtain its intent and possible entities.
+Once your model is set, you can invoke the LUIS Runtime API to analyze user input and obtain its intent and possible entities.
 
 From NPM, use the [azure-cognitiveservices-luis-authoring](https://www.npmjs.com/package/azure-cognitiveservices-luis-authoring) and  [azure-cognitiveservices-luis-runtime](https://www.npmjs.com/package/azure-cognitiveservices-luis-runtime)  packages.
 
@@ -92,7 +92,7 @@ Detected entities:
 	-> Entity 'economy' (type: Class, score: 85.95%)
 	-> Entity 'madrid' (type: Destination, score: 89.44%)
 	-> Entity 'economy to madrid' (type: Flight, score: 81.03%)
-Complete result object as dictionnary
+Complete result object as dictionary
 {"query":"find flights in economy to Madrid","topScoringIntent":{"intent":"FindFlight","score":0.9557334},"entities":[{"entity":"economy","type":"Class","startIndex":16,"endIndex":22,"score":0.8595318},{"entity":"madrid","type":"Destination","startIndex":27,"endIndex":32,"score":0.8943938},{"entity":"economy to madrid","type":"Flight","startIndex":16,"endIndex":32,"score":0.8102929}],"compositeEntities":[{"parentType":"Flight","value":"economy to madrid","children":[{"type":"Class","value":"economy"},{"type":"Destination","value":"madrid"}]}]}
 ```
 
