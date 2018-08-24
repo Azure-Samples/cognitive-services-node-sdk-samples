@@ -19,7 +19,7 @@ The first step is to get your Programmatic Key. Go to the home page, [www.luis.a
 
 ![Get the programmatic key](images/programmatic-key.png)
 
-Set the `LUIS_SUBSCRIPTION_KEY` environment variable to this programmtic key to continue.
+Set the `LUIS_SUBSCRIPTION_KEY` environment variable to this programmatic key to continue.
 
 ## Cognitive Services: LUIS Authoring Sample
 
@@ -71,7 +71,7 @@ From NPM, use the [azure-cognitiveservices-luis-authoring](https://www.npmjs.com
 const CognitiveServicesCredentials = require('ms-rest-azure').CognitiveServicesCredentials;
 const LUISRuntimeClient = require("azure-cognitiveservices-luis-runtime");
 
-// Create client with SuscriptionKey and Azure region
+// Create client with SubscriptionKey and Azure region
 const credentials = new CognitiveServicesCredentials(subscriptionKey);
 const client = new LUISRuntimeClient(credentials, "https://westus.api.cognitive.microsoft.com")
 
