@@ -40,7 +40,7 @@ If you want to test this sample, you have to import the pre-build [LuisApp.json]
 
 Once you imported the application you'll need to "train" the model ([Training](https://docs.microsoft.com/en-us/azure/cognitive-services/luis/train-test)) before you can "Publish" the model in an HTTP endpoint. For more information, take a look at [Publishing a Model](https://docs.microsoft.com/en-us/azure/cognitive-services/luis/publishapp).
 
-Finally, edit the [luisRuntime.js](luisRuntime.js) file and update the attribute placeholders with the values corresponding to your Application and Azure Region where the application was deployed.
+Finally, edit the [luisRuntime.js](luisRuntime.js) file and update the attribute placeholders with the values corresponding to your Application and Endpoint where the application was deployed.
 
 #### Where to find the Application ID and Subscription Key
 
@@ -52,7 +52,7 @@ You'll need these two values to configure the LuisDialog through the LuisModel a
 
     ![App Settings](images/prereqs-appid.png)
 
-2. Subscription Key and Azure Region
+2. Subscription Key and Endpoint
 
     Click on the Publish App link from the top of the LUIS application dashboard. Once your app is published, copy the Region and Key String from *Starter_Key* from the Endpoints table on the Publish App page.
 
@@ -71,7 +71,7 @@ From NPM, use the [azure-cognitiveservices-luis-authoring](https://www.npmjs.com
 const CognitiveServicesCredentials = require('ms-rest-azure').CognitiveServicesCredentials;
 const LUISRuntimeClient = require("azure-cognitiveservices-luis-runtime");
 
-// Create client with SubscriptionKey and Azure region
+// Create client with SubscriptionKey and Endpoint
 const credentials = new CognitiveServicesCredentials(subscriptionKey);
 const client = new LUISRuntimeClient(credentials, "https://westus.api.cognitive.microsoft.com")
 
