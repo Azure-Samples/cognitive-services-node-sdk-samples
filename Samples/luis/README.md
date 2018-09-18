@@ -19,7 +19,7 @@ The first step is to get your Authoring Key. Go to the home page, [www.luis.ai](
 
 ![Get the programmatic key](images/programmatic-key.png)
 
-Set the `LUIS_SUBSCRIPTION_KEY` environment variable to this programmatic key to continue.
+Set the `LUIS_SUBSCRIPTION_KEY` environment variable to this authoring key to continue.
 
 ## Cognitive Services: LUIS Authoring Sample
 
