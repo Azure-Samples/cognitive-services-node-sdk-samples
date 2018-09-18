@@ -15,7 +15,7 @@ A example demonstrating how:
 The minimum prerequisites to run this sample are:
 * A [LUIS.ai account](https://www.luis.ai/) where to upload the sample's LUIS model.
 
-The first step is to get your Programmatic Key. Go to the home page, [www.luis.ai](https://www.luis.ai/), and log in. After creating your LUIS account, a starter key, also known as a programmatic key, is created automatically for LUIS account. To find the programmatic key, click on the account name in the upper-right navigation bar to open [Account Settings](https://www.luis.ai/user/settings), which displays the Programmatic Key.
+The first step is to get your Authoring Key. Go to the home page, [www.luis.ai](https://www.luis.ai/), and log in. After creating your LUIS account, a starter key, also known as a Authoring key, is created automatically for LUIS account. To find the authoring key, click on the account name in the upper-right navigation bar to open [Account Settings](https://www.luis.ai/user/settings), which displays the Authoring Key.
 
 ![Get the programmatic key](images/programmatic-key.png)
 
