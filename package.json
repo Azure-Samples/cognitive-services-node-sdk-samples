@@ -25,6 +25,8 @@
     "azure-cognitiveservices-search": "^1.1.0-preview",
     "azure-cognitiveservices-vision": "^1.0.0-preview",
     "azure-cognitiveservices-visualsearch": "^1.1.0-preview",
+    "azure-cognitiveservices-customvision-training": "^2.0.0",
+    "azure-cognitiveservices-customvision-prediction": "^2.0.0",
     "ms-rest": "^2.3.3",
     "ms-rest-azure": "^2.5.5",
     "npm": "^5.8.0",
