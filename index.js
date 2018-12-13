@@ -25,7 +25,9 @@ const samples = {
   },
   Vision: {
     ComputerVision: './Samples/computerVision',
-    ContentModerator: './Samples/contentModerator'
+    ContentModerator: './Samples/contentModerator',
+    CustomVisionImageClassify: './Samples/customVision/customVisionImgClassify',
+    CustomVisionObjectDetection: './Samples/customVision/customVisionObjDetect'
   },
   // Knowledge: {
 
