@@ -25,6 +25,9 @@ const trainingKey = process.env[trainingKeyVar];
 const predictionKey = process.env[predictionKeyVar];
 const endPoint = "https://southcentralus.api.cognitive.microsoft.com"
 
+const predictionResourceId = "<your prediction resource id>";
+const publishIterationName = "classifyModel";
+
 const trainer = new TrainingApiClient(trainingKey, endPoint);
 
 async function sample() {
@@ -67,14 +70,14 @@ async function sample() {
     }
     console.log("Training status: " + trainingIteration.status);
 
-    trainingIteration.isDefault = true;
-    await trainer.updateIteration(sampleProject.id, trainingIteration.id, trainingIteration);
+    // Publish the iteration to the end point
+    await trainer.publishIteration(sampleProject.id, trainingIteration.id, publishIterationName, predictionResourceId);
 
     // Step 5. Prediction
     const predictor = new PredictionApiClient(predictionKey, endPoint);
     const testFile = fs.readFileSync(`${sampleDataRoot}/Test/test_image.jpg`);
 
-    const results = await predictor.predictImage(sampleProject.id, testFile, { iterationId: trainingIteration.id });
+    const results = await predictor.classifyImage(sampleProject.id, testFile, publishIterationName);
 
     // Step 6. Show results
     console.log("Results:");
