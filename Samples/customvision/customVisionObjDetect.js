@@ -156,7 +156,7 @@ async function sample() {
     const predictor = new PredictionApi.PredictionAPIClient(predictionKey, endPoint);
     const testFile = fs.readFileSync(`${sampleDataRoot}/Test/test_od_image.jpg`);
 
-    const results = await predictor.detectImage(sampleProject.id, testFile, publishIterationName)
+    const results = await predictor.detectImage(sampleProject.id, publishIterationName, testFile)
 
     // Step 6. Show results
     console.log("Results:");
