@@ -7,8 +7,7 @@
 
 const os = require("os");
 const TextAnalyticsAPIClient = require("azure-cognitiveservices-textanalytics");
-const CognitiveServicesCredentials = require("ms-rest-azure")
-  .CognitiveServicesCredentials;
+const CognitiveServicesCredentials = require("ms-rest-azure").CognitiveServicesCredentials;
 
 let keyVar = 'AZURE_TEXT_ANALYTICS_KEY';
 
