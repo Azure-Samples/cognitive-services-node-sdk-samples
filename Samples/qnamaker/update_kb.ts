@@ -21,7 +21,7 @@ if (!process.env[keyVar]) {
 }
 
 // The ID of the KB to update.
-var kb_id = "7bd787d4-ad47-4025-b41d-c5cf23d637a3";
+var kb_id = "INSERT ID HERE";
 
 /*
  * The QnAMakerClient constructor expects a parameter 'credentials' of type
