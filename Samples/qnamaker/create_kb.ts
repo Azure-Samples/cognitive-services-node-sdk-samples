@@ -38,7 +38,7 @@ if (!process.env[keyVar]) {
  * https://github.com/Azure/ms-rest-js/blob/master/lib/credentials/apiKeyCredentials.ts#L26
  */
 const creds = new msRest.ApiKeyCredentials({ inHeader: { 'Ocp-Apim-Subscription-Key': process.env[keyVar] }});
-const client = new qnamaker.QnAMakerClient(endpoint, creds);
+const client = new qnamaker.QnAMakerClient(creds, endpoint);
 const kb = new qnamaker.Knowledgebase(client);
 
 /*
@@ -151,4 +151,3 @@ try {
 catch (error) {
     console.log(error);
 }
-
