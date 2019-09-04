@@ -10,6 +10,7 @@ const async = require('async');
 const Search = require('azure-cognitiveservices-search');
 const CognitiveServicesCredentials = require('ms-rest-azure').CognitiveServicesCredentials;
 
+// Add your Bing Search V7 subscription key to your environment variables.
 let keyVar = process.env['BING_SEARCH_V7_SUBSCRIPTION_KEY']
 
 if (!process.env[keyVar]) {
