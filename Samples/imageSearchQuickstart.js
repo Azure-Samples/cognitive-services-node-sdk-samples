@@ -10,8 +10,8 @@ const https = require('https');
 const Search = require('azure-cognitiveservices-imagesearch');
 const CognitiveServicesCredentials = require('ms-rest-azure').CognitiveServicesCredentials;
 
-//replace this value with your valid subscription key.
-let serviceKey = "ENTER YOUR KEY HERE";
+// Add your Bing Search V7 subscription key to your environment variables.
+let serviceKey = process.env['BING_SEARCH_V7_SUBSCRIPTION_KEY']
 
 //the search term for the request 
 let searchTerm = "canadian rockies";
