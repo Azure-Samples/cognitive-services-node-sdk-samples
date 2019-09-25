@@ -19,10 +19,13 @@
   "main": "./index.js",
   "license": "MIT",
   "dependencies": {
+    "azure-cognitiveservices-customvision-prediction": "^2.0.0",
+    "azure-cognitiveservices-customvision-training": "^2.0.0",
     "azure-cognitiveservices-language": "^1.0.0-preview",
     "azure-cognitiveservices-luis-authoring": "^1.0.0",
     "azure-cognitiveservices-luis-runtime": "^1.0.0",
     "azure-cognitiveservices-search": "^1.1.0-preview",
+    "azure-cognitiveservices-textanalytics": "^3.0.0",
     "azure-cognitiveservices-vision": "^1.0.0-preview",
     "azure-cognitiveservices-visualsearch": "^1.1.0-preview",
     "ms-rest": "^2.3.3",
