@@ -171,5 +171,3 @@ async function entityRecognition(client){
 }
 entityRecognition(textAnalyticsClient);
 // </entityRecognition>
-
-exports.sample = sample;
