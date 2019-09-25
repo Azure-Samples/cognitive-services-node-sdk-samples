@@ -3,12 +3,15 @@
  * Licensed under the MIT License. See License.txt in the project root for
  * license information.
  */
+// <constStatements>
 "use strict";
 
 const os = require("os");
 const CognitiveServicesCredentials = require("@azure/ms-rest-js");
 const TextAnalyticsAPIClient = require("@azure/cognitiveservices-textanalytics");
+// </constStatements> 
 
+// <keyVars>
 const key_var = 'TEXT_ANALYTICS_SUBSCRIPTION_KEY';
 if (!process.env[key_var]) {
     throw new Error('please set/export the following environment variable: ' + key_var);
@@ -20,16 +23,20 @@ if (!process.env[endpoint_var]) {
     throw new Error('please set/export the following environment variable: ' + endpoint_var);
 }
 const endpoint = process.env[endpoint_var];
+// </keyVars>
 
 ///////////////////////////////////////////
 //     Entrypoint for sample script      //
 ///////////////////////////////////////////
 
+// <authentication>
 const creds = new CognitiveServicesCredentials.ApiKeyCredentials({ inHeader: { 'Ocp-Apim-Subscription-Key': subscription_key } });
-const client = new TextAnalyticsAPIClient.TextAnalyticsClient(creds, endpoint);
+const textAnalyticsClient = new TextAnalyticsAPIClient.TextAnalyticsClient(creds, endpoint);
+// </authentication>
 
-async function sample() {
-    // *****Language Detection Example*****
+// <languageDetection>
+async function languageDetection(client) {
+
     console.log("1. This will detect the languages of the inputs.");
     const languageInput = {
         documents: [
@@ -50,8 +57,13 @@ async function sample() {
         );
     });
     console.log(os.EOL);
+}
+languageDetection(textAnalyticsClient);
+// </languageDetection>
 
-    // *****Key Phrase Extraction Example*****
+// <keyPhraseExtraction>
+async function keyPhraseExtraction(client){
+
     console.log("2. This will extract key phrases from the sentences.");
     const keyPhrasesInput = {
         documents: [
@@ -75,8 +87,13 @@ async function sample() {
     });
     console.log(keyPhraseResult.documents);
     console.log(os.EOL);
+}
+keyPhraseExtraction(textAnalyticsClient);
+// </keyPhraseExtraction>
 
-    // *****Sentiment Analysis Example*****
+// <sentimentAnalysis>
+async function sentimentAnalysis(client){
+
     console.log("3. This will perform sentiment analysis on the sentences.");
 
     const sentimentInput = {
@@ -106,8 +123,12 @@ async function sample() {
     });
     console.log(sentimentResult.documents);
     console.log(os.EOL);
+}
+sentimentAnalysis(textAnalyticsClient)
+// </sentimentAnalysis>
 
-    // *****Entity Recognition Example*****
+// <entityRecognition>
+async function entityRecognition(client){
     console.log("3. This will perform Entity recognition on the sentences.");
 
     const entityInputs = {
@@ -148,5 +169,7 @@ async function sample() {
     console.log(os.EOL);
     console.log("Finished running Spell-Check sample.");
 }
+entityRecognition(textAnalyticsClient);
+// </entityRecognition>
 
 exports.sample = sample;
