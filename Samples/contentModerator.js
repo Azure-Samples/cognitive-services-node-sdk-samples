@@ -11,7 +11,8 @@ const async = require('async');
 const Vision = require('azure-cognitiveservices-vision');
 const CognitiveServicesCredentials = require('ms-rest-azure').CognitiveServicesCredentials;
 
-let keyVar = 'AZURE_CONTENT_MODERATOR_KEY';
+// Add your Azure Content Moderator subscription key to your environment variables.
+let keyVar = process.env['CONTENT_MODERATOR_SUBSCRIPTION_KEY']
 
 if (!process.env[keyVar]) {
   throw new Error('please set/export the following environment variable: ' + keyVar);
@@ -35,7 +36,9 @@ const samples = {
 ///////////////////////////////////////////
 
 let credentials = new CognitiveServicesCredentials(serviceKey);
-let contentModeratorApiClient = new Vision.ContentModeratorAPIClient(credentials, 'westus.api.cognitive.microsoft.com');
+
+// Add your Azure Content Moderator endpoint to your environment variables.
+let contentModeratorApiClient = new Vision.ContentModeratorAPIClient(credentials, process.env['CONTENT_MODERATOR_ENDPOINT']);
 const separator = "------------------------------------------------------------------------------------";
 
 function sample(rl) {
