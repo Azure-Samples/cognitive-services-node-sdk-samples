@@ -12,10 +12,12 @@ const fs = require('fs');
 const Vision = require('azure-cognitiveservices-vision');
 const CognitiveServicesCredentials = require('ms-rest-azure').CognitiveServicesCredentials;
 
-let keyVar = 'AZURE_COMPUTER_VISION_KEY';
+// Add your Computer Vision endpoint and subscription key to your environment variables.
+let keyVar = 'COMPUTER_VISION_SUBSCRIPTION_KEY';
+let endpoint = process.env['COMPUTER_VISION_ENDPOINT']
 
 if (!process.env[keyVar]) {
-  throw new Error('please set/export the following environment variable: ' + keyVar);
+  throw new Error('Please set/export the following environment variable: ' + keyVar);
 }
 
 let serviceKey = process.env[keyVar];
@@ -26,7 +28,7 @@ let serviceKey = process.env[keyVar];
 ///////////////////////////////////////////
 
 let credentials = new CognitiveServicesCredentials(serviceKey);
-let computerVisionApiClient = new Vision.ComputerVisionAPIClient(credentials, "westus");
+let computerVisionApiClient = new Vision.ComputerVisionAPIClient(credentials, endpoint);
 let cvModels = computerVisionApiClient.models;
 
 function sample() {
