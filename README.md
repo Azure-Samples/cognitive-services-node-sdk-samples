@@ -8,7 +8,7 @@ description: "These samples will show you how to get up and running using the SD
 urlFragment: cognitive-services-node-sdk-samples
 ---
 
-# Cognitive Services SDK Samples
+# Cognitive Services SDK Samples (Node)
 
 These samples will show you how to get up and running using the SDKs for various Cognitive Services. They'll cover a few rudimentary use cases and hopefully express best practices for interacting with the data from these APIs.
 
