@@ -12,7 +12,6 @@ const CognitiveServicesCredentials = require('ms-rest-azure').CognitiveServicesC
 
 // Add your Bing Search V7 subscription key to your environment variables.
 let subscriptionKey = process.env['BING_SEARCH_V7_SUBSCRIPTION_KEY']
-// Add your Bing Entity Search subscription key to your environment variables.
 if (subscriptionKey == null || subscriptionKey == "" || subscriptionKey == undefined) {
   throw new Error('Set/export your subscription key as an environment variable.');
 }
