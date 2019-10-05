@@ -11,31 +11,27 @@ const async = require('async');
 const Search = require('azure-cognitiveservices-search');
 const CognitiveServicesCredentials = require('ms-rest-azure').CognitiveServicesCredentials;
 
+let subscriptionKey = process.env['BING_ENTITY_SEARCH_SUBSCRIPTION_KEY']
 // Add your Bing Entity Search subscription key to your environment variables.
-let keyVar = process.env['BING_ENTITY_SEARCH_SUBSCRIPTION_KEY']
-
-if (!process.env[keyVar]) {
-  throw new Error('please set/export the following environment variable: ' + keyVar);
+if (subscriptionKey == null || subscriptionKey == "" || subscriptionKey == undefined) {
+  throw new Error('Set/export your subscription key as an environment variable.');
 }
-
-let serviceKey = process.env[keyVar];
-
 
 ///////////////////////////////////////////
 //     Entrypoint for sample script      //
 ///////////////////////////////////////////
 
-let credentials = new CognitiveServicesCredentials(serviceKey);
+let credentials = new CognitiveServicesCredentials(subscriptionKey);
 let entitySearchApiClient = new Search.EntitySearchAPIClient(credentials);
 let entityModels = entitySearchApiClient.models;
 
 function sample() {
   async.series([
     async function () {
-      console.log("1. This will look up a single entity (Satya Nadella) and print out a short description about them.");
+      console.log("1. This will look up a single entity (Alan Turing) and print out a short description about them.");
       let result;
       try {
-        result = await entitySearchApiClient.entitiesOperations.search("Satya Nadella");
+        result = await entitySearchApiClient.entitiesOperations.search("Alan Turing");
       } catch (err) {
         if (err instanceof entityModels.ErrorResponse) {
           console.log("Encountered exception. " + err.message);
@@ -47,11 +43,11 @@ function sample() {
           (thing) => thing.entityPresentationInfo.entityScenario == "DominantEntity"
         );
         if (mainEntity) {
-          console.log("Searched for \"Satya Nadella\" and found a dominant entity with this description:");
+          console.log("Searched for \"Alan Turing\" and found a dominant entity with this description:");
           console.log(mainEntity.description);
         }
         else {
-          console.log("Couldn't find main entity Satya Nadella!");
+          console.log("Couldn't find main entity Alan Turing!");
         }
       }
       else {
@@ -123,7 +119,7 @@ function sample() {
         let business = result.places.value[0];
         if (business) {
           console.log("Searched for \"Microsoft Store Bellevue\" and found a business with this phone number:");
-          console.log(restaurant.telephone);
+          console.log(business.telephone);
         }
         else {
           console.log("Couldn't find a place!");
@@ -172,7 +168,7 @@ function sample() {
       console.log("5. This triggers a bad request and shows how to read the error response.");
       let result;
       try {
-        result = await entitySearchApiClient.entitiesOperations.search("Satya Nadella", { market: "no-ty" });
+        result = await entitySearchApiClient.entitiesOperations.search("Alan Turing", { market: "no-ty" });
       } catch (err) {
         if (err instanceof entityModels.ErrorResponse) {
           // The status code of the error should be a good indication of what occurred.
@@ -203,5 +199,5 @@ function sample() {
     throw (err);
   });
 }
-
+sample()
 exports.sample = sample;
