@@ -11,20 +11,17 @@ const Search = require('azure-cognitiveservices-search');
 const CognitiveServicesCredentials = require('ms-rest-azure').CognitiveServicesCredentials;
 
 // Add your Bing Search V7 subscription key to your environment variables.
-let keyVar = process.env['BING_SEARCH_V7_SUBSCRIPTION_KEY']
+let subscriptionKey = process.env['BING_SEARCH_V7_SUBSCRIPTION_KEY']
 
-if (!process.env[keyVar]) {
-  throw new Error('please set/export the following environment variable: ' + keyVar);
+if (subscriptionKey == null || subscriptionKey == "" || subscriptionKey == undefined) {
+  throw new Error('please set/export the following environment variable: ' + subscriptionKey);
 }
-
-let serviceKey = process.env[keyVar];
-
 
 ///////////////////////////////////////////
 //     Entrypoint for sample script      //
 ///////////////////////////////////////////
 
-let credentials = new CognitiveServicesCredentials(serviceKey);
+let credentials = new CognitiveServicesCredentials(subscriptionKey);
 let imageSearchApiClient = new Search.ImageSearchAPIClient(credentials);
 
 function sample() {
@@ -258,5 +255,5 @@ function sample() {
     throw (err);
   });
 }
-
+sample()
 exports.sample = sample;
