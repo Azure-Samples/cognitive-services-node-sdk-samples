@@ -167,7 +167,6 @@ async function entityRecognition(client){
     });
 
     console.log(os.EOL);
-    console.log("Finished running Spell-Check sample.");
 }
 entityRecognition(textAnalyticsClient);
 // </entityRecognition>
