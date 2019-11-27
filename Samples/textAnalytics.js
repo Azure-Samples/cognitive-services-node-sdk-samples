@@ -16,10 +16,6 @@ const key = '<paste-your-text-analytics-key-here>'
 const endpoint = `<paste-your-text-analytics-endpoint-here>`;
 // </keyVars>
 
-///////////////////////////////////////////
-//     Entrypoint for sample script      //
-///////////////////////////////////////////
-
 // <authentication>
 const creds = new CognitiveServicesCredentials.ApiKeyCredentials({ inHeader: { 'Ocp-Apim-Subscription-Key': key } });
 const textAnalyticsClient = new TextAnalyticsAPIClient.TextAnalyticsClient(creds, endpoint);
