@@ -27,6 +27,7 @@ const samples = {
   ImageReviews: './contentModerator/ImageReviews',
   TermListManagement: './contentModerator/TermListManagement',
   TextModeration: './contentModerator/TextModeration',
+  VideoAnalyze: './contentModerator/VideoAnalyze',
   VideoReviews: './contentModerator/VideoReviews',
   VideoTranscriptReviews: './contentModerator/VideoTranscriptReviews'
 }
