@@ -19,6 +19,7 @@
   "main": "./index.js",
   "license": "MIT",
   "dependencies": {
+    "azure-arm-mediaservices": "^4.1.0",
     "azure-cognitiveservices-customvision-prediction": "^2.0.0",
     "azure-cognitiveservices-customvision-training": "^2.0.0",
     "azure-cognitiveservices-language": "^1.0.0-preview",
@@ -31,6 +32,7 @@
     "azure-cognitiveservices-customvision-training": "^3.0.0",
     "azure-cognitiveservices-customvision-prediction": "^3.0.0",
 
+    "azure-storage": "^2.10.3",
     "ms-rest": "^2.3.3",
     "ms-rest-azure": "^2.5.5",
     "npm": "^5.8.0",
