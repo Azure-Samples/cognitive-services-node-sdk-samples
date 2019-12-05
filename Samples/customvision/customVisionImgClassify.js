@@ -23,7 +23,8 @@ const sampleDataRoot = "Samples/customvision/images";
 
 const trainingKey = process.env[trainingKeyVar];
 const predictionKey = process.env[predictionKeyVar];
-const endPoint = "https://southcentralus.api.cognitive.microsoft.com"
+// Add your Custom Vision endpoint to your environment variables.
+const endPoint = process.env['CUSTOM_VISION_ENDPOINT']
 
 const predictionResourceId = "<your prediction resource id>";
 const publishIterationName = "classifyModel";

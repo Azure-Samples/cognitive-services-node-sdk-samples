@@ -11,7 +11,8 @@ const fs = require('fs');
 const Search = require('azure-cognitiveservices-autosuggest');
 const CognitiveServicesCredentials = require('ms-rest-azure').CognitiveServicesCredentials;
 
-const keyVar = 'AZURE_AUTOSUGGEST_KEY';
+// Add your Bing Autosuggest subscription key to your environment variables.
+const keyVar = process.env['BING_AUTOSUGGEST_SUBSCRIPTION_KEY']
 
 if (!process.env[keyVar]) {
   throw new Error('please set/export the following environment variable: ' + keyVar);

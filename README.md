@@ -1,9 +1,14 @@
 ---
-services: cognitive-services
-platforms: node.js
-author: kirthik
+page_type: sample
+languages:
+- javascript
+products:
+- azure
+description: "These samples will show you how to get up and running using the SDKs for various Cognitive Services."
+urlFragment: cognitive-services-node-sdk-samples
 ---
-# Cognitive Services SDK Samples
+
+# Cognitive Services SDK Samples (Node)
 
 These samples will show you how to get up and running using the SDKs for various Cognitive Services. They'll cover a few rudimentary use cases and hopefully express best practices for interacting with the data from these APIs.
 

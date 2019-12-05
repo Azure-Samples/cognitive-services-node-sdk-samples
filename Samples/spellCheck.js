@@ -10,7 +10,8 @@ const async = require('async');
 const Language = require('azure-cognitiveservices-language');
 const CognitiveServicesCredentials = require('ms-rest-azure').CognitiveServicesCredentials;
 
-let keyVar = 'AZURE_SPELL_CHECK_KEY';
+// Add your Bing Spell Check subscription key to your environment variables.
+let keyVar = process.env['BING_SPELL_CHECK_SUBSCRIPTION_KEY']
 
 if (!process.env[keyVar]) {
   throw new Error('please set/export the following environment variable: ' + keyVar);
