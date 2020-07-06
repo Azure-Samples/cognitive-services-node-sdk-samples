@@ -7,18 +7,17 @@
 "use strict";
 
 const os = require("os");
-const CognitiveServicesCredentials = require("@azure/ms-rest-js");
-const TextAnalyticsAPIClient = require("@azure/cognitiveservices-textanalytics");
+const { TextAnalyticsClient, AzureKeyCredential } = require("@azure/ai-text-analytics");
+
 // </constStatements> 
 
 // <keyVars>
-const key = '<paste-your-text-analytics-key-here>'
+const key = '<paste-your-text-analytics-key-here>';
 const endpoint = `<paste-your-text-analytics-endpoint-here>`;
 // </keyVars>
 
 // <authentication>
-const creds = new CognitiveServicesCredentials.ApiKeyCredentials({ inHeader: { 'Ocp-Apim-Subscription-Key': key } });
-const textAnalyticsClient = new TextAnalyticsAPIClient.TextAnalyticsClient(creds, endpoint);
+const textAnalyticsClient = new TextAnalyticsClient(endpoint, new AzureKeyCredential(key));
 // </authentication>
 
 // <languageDetection>
@@ -33,15 +32,10 @@ async function languageDetection(client) {
         ]
     };
 
-    const languageResult = await client.detectLanguage({
-        languageBatchInput: languageInput
-    });
-
-    languageResult.documents.forEach(document => {
+    const languageResult = await client.detectLanguage(languageInput.documents);
+    languageResult.forEach(document => {
         console.log(`ID: ${document.id}`);
-        document.detectedLanguages.forEach(language =>
-            console.log(`\tLanguage ${language.name}`)
-        );
+        console.log(`\tLanguage ${document.primaryLanguage.name}`)
     });
     console.log(os.EOL);
 }
@@ -69,10 +63,10 @@ async function keyPhraseExtraction(client){
         ]
     };
 
-    const keyPhraseResult = await client.keyPhrases({
-        multiLanguageBatchInput: keyPhrasesInput
-    });
-    console.log(keyPhraseResult.documents);
+    const keyPhraseResult = await client.extractKeyPhrases(keyPhrasesInput.documents, 'en');
+    keyPhraseResult.forEach(document=>{
+        console.log(`ID: ${document.id} KeyPhrases: ${document.keyPhrases}`)
+    })
     console.log(os.EOL);
 }
 keyPhraseExtraction(textAnalyticsClient);
@@ -105,10 +99,10 @@ async function sentimentAnalysis(client){
         ]
     };
 
-    const sentimentResult = await client.sentiment({
-        multiLanguageBatchInput: sentimentInput
-    });
-    console.log(sentimentResult.documents);
+    const sentimentResult = await client.analyzeSentiment(sentimentInput.documents);
+    sentimentResult.forEach(document=>{
+        console.log(`ID: ${document.id} Sentiment: ${document.sentiment}`);
+    })
     console.log(os.EOL);
 }
 sentimentAnalysis(textAnalyticsClient)
@@ -135,22 +129,13 @@ async function entityRecognition(client){
         ]
     };
 
-    const entityResults = await client.entities({
-        multiLanguageBatchInput: entityInputs
-    });
-
-    entityResults.documents.forEach(document => {
+    const entityResults = await client.recognizeEntities(entityInputs.documents);
+    entityResults.forEach(document => {
         console.log(`Document ID: ${document.id}`);
-        document.entities.forEach(e => {
-            console.log(`\tName: ${e.name} Type: ${e.type} Sub Type: ${e.type}`);
-            e.matches.forEach(match =>
-                console.log(
-                    `\t\tOffset: ${match.offset} Length: ${match.length} Score: ${
-                    match.entityTypeScore
-                    }`
-                )
-            );
-        });
+        for (const e of document.entities) {
+            console.log(`\tName: ${e.text} Category: ${e.category} Sub Category: ${e.subCategory}`);
+            console.log(`\t\tOffset: ${e.offset} Length: ${e.length} Score: ${e.confidenceScore}`);
+        }
     });
 
     console.log(os.EOL);
