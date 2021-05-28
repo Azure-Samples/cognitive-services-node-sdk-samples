@@ -28,7 +28,6 @@ This project framework provides examples for the following services:
 * Using the **Bing Spell Check SDK** \[[individual package](https://www.npmjs.com/package/azure-cognitiveservices-spellcheck)\]\[[complete package](https://www.npmjs.com/package/azure-cognitiveservices-language)\] for the [Spell Check API](https://azure.microsoft.com/en-us/services/cognitive-services/spell-check/)
 * Using the **Computer Vision SDK** \[[individual package](https://www.npmjs.com/package/azure-cognitiveservices-computervision)\]\[[complete package](https://www.npmjs.com/package/azure-cognitiveservices-vision)\] for the [Computer Vision API](https://azure.microsoft.com/en-us/services/cognitive-services/computer-vision/)
 * Using the **Content Moderator SDK** \[[individual package](https://www.npmjs.com/package/azure-cognitiveservices-contentmoderator)\]\[[complete package](https://www.npmjs.com/package/azure-cognitiveservices-vision)\] for the [Content Moderator API](https://azure.microsoft.com/en-us/services/cognitive-services/content-moderator/)
-* Using the **Text Analytics SDK** \[[individual package](https://www.npmjs.com/package/azure-cognitiveservices-textanalytics)\]\[[complete package](https://www.npmjs.com/package/azure-cognitiveservices-language)\] for the [Text Analytics API](https://azure.microsoft.com/en-us/services/cognitive-services/text-analytics/)
 * Using the **Custom Vision Training SDK** \[[individual package](https://www.npmjs.com/package/azure-cognitiveservices-customvision-training)\]\[[complete package](https://www.npmjs.com/package/azure-cognitiveservices-vision)\] for the [Custom Vision Trianing API](https://azure.microsoft.com/en-us/services/cognitive-services/custom-vision-service/)
 * Using the **Custom Vision Prediction SDK** \[[individual package](https://www.npmjs.com/package/azure-cognitiveservices-customvision-prediction)\]\[[complete package](https://www.npmjs.com/package/azure-cognitiveservices-vision)\] for the [Custom Vision Prediction API](https://azure.microsoft.com/en-us/services/cognitive-services/custom-vision-service/)
 
@@ -65,7 +64,6 @@ This project framework provides examples for the following services:
     export AZURE_SPELL_CHECK_KEY={your service key}
     export AZURE_COMPUTER_VISION_KEY={your service key}
     export AZURE_CONTENT_MODERATOR_KEY={your service key}
-    export AZURE_TEXT_ANALYTICS_KEY={your service key}
     export AZURE_CUSTOM_VISION_TRAINING_KEY={your service key}
     export AZURE_CUSTOM_VISION_PREDICTION_KEY={your service key}
     ```
