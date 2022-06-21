@@ -14,8 +14,6 @@ const url = require("url");
 const fs = require("fs");
 
 const { AzureMediaServices } = require("@azure/arm-mediaservices");
-const msRestAzure = require("ms-rest-azure");
-const msRest = require("ms-rest");
 const {
   BlobServiceClient,
   AnonymousCredential,
@@ -27,8 +25,6 @@ const setTimeoutPromise = util.promisify(setTimeout);
 // endpoint config
 // make sure your URL values end with '/'
 
-const armAadAudience = "https://management.core.windows.net/";
-const aadEndpoint = "https://login.microsoftonline.com/";
 const armEndpoint = "https://management.azure.com/";
 const subscriptionId = "00000000-0000-0000-0000-000000000000";
 const accountName = "amsaccount";
