@@ -35,7 +35,7 @@
     "@azure/storage-blob": "^12.9.0",
     "ms-rest": "^2.3.3",
     "ms-rest-azure": "^2.5.5",
-    "npm": "^6.13.4",
+    "npm": "^9.7.2",
     "utf8": "^3.0.0"
   },
   "homepage": "https://github.com/Azure-Samples/bing-search-node",
